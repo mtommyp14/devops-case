@@ -85,22 +85,48 @@ This is a broad map of widely used tools and tool families, not a literal invent
 
 ## Official documentation and usage guides
 
-Use these vendor- or project-maintained references alongside the study cases. Start with concepts or a quickstart, then use the reference pages when changing configuration. These links cover representative tools; the list is not exhaustive.
+Use these vendor- or project-maintained references alongside the study cases. The links go to official usage guides, quickstarts, or product references. They cover a wide selection across the ecosystem; no list can include every tool or every plugin.
 
-| Area | Official documentation |
+| Area | Tools and official usage documentation |
 | --- | --- |
-| Source control | [Git documentation and manuals](https://git-scm.com/docs) |
-| Containers | [Docker getting started](https://docs.docker.com/get-started/), [Docker Engine](https://docs.docker.com/engine/), and [Docker Compose quickstart](https://docs.docker.com/compose/gettingstarted/) |
-| CI/CD | [GitHub Actions](https://docs.github.com/en/actions), [GitLab CI/CD pipelines](https://docs.gitlab.com/ci/pipelines/), and [Jenkins user documentation](https://www.jenkins.io/doc/) |
-| Kubernetes and packaging | [Kubernetes concepts](https://kubernetes.io/docs/concepts/), [kubectl reference](https://kubernetes.io/docs/reference/kubectl/), [Helm quickstart](https://helm.sh/docs/intro/quickstart/), and [Kustomize](https://kubectl.docs.kubernetes.io/references/kustomize/) |
-| Infrastructure automation | [Terraform documentation](https://developer.hashicorp.com/terraform/docs) and [Ansible getting started](https://docs.ansible.com/projects/ansible/latest/user_guide/quickstart.html) |
-| Data services | [PostgreSQL tutorial](https://www.postgresql.org/docs/current/tutorial.html) and [Apache Kafka quickstart](https://kafka.apache.org/quickstart/) |
-| Metrics, logs, and traces | [Prometheus getting started](https://prometheus.io/docs/prometheus/latest/getting_started/), [Grafana documentation](https://grafana.com/docs/grafana/latest/), [Grafana Loki](https://grafana.com/docs/loki/latest/), and [OpenTelemetry documentation](https://opentelemetry.io/docs/) |
-| Load testing | [Grafana k6 documentation](https://grafana.com/docs/k6/latest/) and [write your first k6 test](https://grafana.com/docs/k6/latest/get-started/write-your-first-test/) |
-| Policy as code | [Open Policy Agent documentation](https://www.openpolicyagent.org/docs) |
-| Programming language used by lab tooling | [Python tutorial and language documentation](https://docs.python.org/3/) |
+| Operating systems and shell | [Linux kernel documentation](https://docs.kernel.org/), [GNU Bash manual](https://www.gnu.org/software/bash/manual/), [OpenSSH manuals](https://www.openssh.com/manual.html) |
+| Source control and code hosting | [Git](https://git-scm.com/docs), [GitHub Docs](https://docs.github.com/), [GitLab Docs](https://docs.gitlab.com/), [Bitbucket Cloud](https://support.atlassian.com/bitbucket-cloud/) |
+| Work tracking and collaboration | [GitHub Issues and Projects](https://docs.github.com/en/issues), [GitLab issue tracking](https://docs.gitlab.com/user/project/issues/), [Jira](https://support.atlassian.com/jira-software-cloud/) |
+| CI/CD and automation | [GitHub Actions](https://docs.github.com/en/actions), [GitLab CI/CD](https://docs.gitlab.com/ci/), [Jenkins](https://www.jenkins.io/doc/), [CircleCI](https://circleci.com/docs/) |
+| Build systems and package managers | [GNU Make](https://www.gnu.org/software/make/manual/), [Maven](https://maven.apache.org/guides/), [Gradle](https://docs.gradle.org/current/userguide/userguide.html), [npm](https://docs.npmjs.com/), [Python](https://docs.python.org/3/) |
+| Code quality and dependency updates | [SonarQube](https://docs.sonarsource.com/), [Semgrep](https://semgrep.dev/docs/), [Dependabot](https://docs.github.com/en/code-security/dependabot), [Renovate](https://docs.renovatebot.com/) |
+| Secret detection and application security testing | [Gitleaks](https://github.com/gitleaks/gitleaks), [OWASP ZAP](https://www.zaproxy.org/docs/) |
+| Container build and runtime | [Docker Engine](https://docs.docker.com/engine/), [Docker Compose](https://docs.docker.com/compose/gettingstarted/), [Podman](https://podman.io/docs), [Buildah](https://github.com/containers/buildah/tree/main/docs), [containerd](https://containerd.io/docs/) |
+| Image registries and artifact storage | [Docker Hub](https://docs.docker.com/docker-hub/), [GitHub Packages / Container Registry](https://docs.github.com/en/packages), [Harbor](https://goharbor.io/docs/), [Amazon ECR](https://docs.aws.amazon.com/ecr/), [Azure Container Registry](https://learn.microsoft.com/azure/container-registry/), [Google Artifact Registry](https://cloud.google.com/artifact-registry/docs) |
+| Container, code, and IaC scanning | [Trivy](https://trivy.dev/docs/latest/guide/), [Syft SBOM](https://github.com/anchore/syft), [Grype](https://github.com/anchore/grype) |
+| Container orchestration | [Kubernetes concepts](https://kubernetes.io/docs/concepts/), [kubectl reference](https://kubernetes.io/docs/reference/kubectl/), [Red Hat OpenShift](https://docs.openshift.com/) |
+| Kubernetes packaging and customization | [Helm](https://helm.sh/docs/intro/quickstart/), [Kustomize](https://kubectl.docs.kubernetes.io/references/kustomize/) |
+| GitOps and progressive delivery | [Argo CD](https://argo-cd.readthedocs.io/en/stable/), [Flux](https://fluxcd.io/flux/get-started/), [Argo Rollouts](https://argo-rollouts.readthedocs.io/en/stable/) |
+| Alternative workload schedulers | [HashiCorp Nomad](https://developer.hashicorp.com/nomad/docs) |
+| Cloud platforms | [AWS Documentation](https://docs.aws.amazon.com/), [Microsoft Azure](https://learn.microsoft.com/azure/), [Google Cloud](https://docs.cloud.google.com/docs) |
+| Infrastructure as code | [Terraform](https://developer.hashicorp.com/terraform/docs), [OpenTofu](https://opentofu.org/docs/), [Pulumi](https://www.pulumi.com/docs/), [AWS CDK](https://docs.aws.amazon.com/cdk/), [AWS CloudFormation](https://docs.aws.amazon.com/cloudformation/) |
+| Host and configuration automation | [Ansible](https://docs.ansible.com/projects/ansible/latest/user_guide/quickstart.html), [Puppet](https://help.puppet.com/core/current/Content/PuppetCore/puppet_index.htm), [Chef Infra quickstart](https://docs.chef.io/client/19/quickstart/) |
+| Reverse proxies, ingress, and TLS | [NGINX](https://docs.nginx.com/), [Traefik](https://doc.traefik.io/traefik/), [HAProxy](https://docs.haproxy.org/), [Envoy](https://www.envoyproxy.io/docs), [cert-manager](https://cert-manager.io/docs/) |
+| API gateways and edge | [Kong Gateway](https://developer.konghq.com/gateway/), [AWS API Gateway](https://docs.aws.amazon.com/apigateway/), [Cloudflare developer docs](https://developers.cloudflare.com/) |
+| Service mesh and network policy | [Istio](https://istio.io/latest/docs/), [Linkerd](https://linkerd.io/docs/overview/), [Cilium](https://docs.cilium.io/) |
+| Relational and document databases | [PostgreSQL tutorial](https://www.postgresql.org/docs/current/tutorial.html), [MySQL Reference Manual](https://dev.mysql.com/doc/), [MongoDB Manual](https://www.mongodb.com/docs/manual/) |
+| Cache and in-memory data | [Redis documentation and quickstarts](https://redis.io/docs/latest/) |
+| Message brokers and event streaming | [Apache Kafka quickstart](https://kafka.apache.org/quickstart/), [RabbitMQ tutorials](https://www.rabbitmq.com/tutorials) |
+| Metrics and dashboards | [Prometheus](https://prometheus.io/docs/prometheus/latest/getting_started/), [Grafana](https://grafana.com/docs/grafana/latest/) |
+| Logs and search | [Grafana Loki](https://grafana.com/docs/loki/latest/), [Elastic Stack](https://www.elastic.co/guide/index.html), [OpenSearch](https://docs.opensearch.org/latest/) |
+| Traces and telemetry standards | [OpenTelemetry](https://opentelemetry.io/docs/), [Jaeger](https://www.jaegertracing.io/docs/latest/), [Grafana Tempo](https://grafana.com/docs/tempo/latest/) |
+| Hosted observability | [Datadog documentation](https://docs.datadoghq.com/), [New Relic documentation](https://docs.newrelic.com/) |
+| Automated and API testing | [pytest](https://docs.pytest.org/en/stable/), [Postman](https://learning.postman.com/docs/), [Playwright](https://playwright.dev/docs/intro) |
+| Load and performance testing | [Grafana k6](https://grafana.com/docs/k6/latest/), including [the first test guide](https://grafana.com/docs/k6/latest/get-started/write-your-first-test/) |
+| Fault injection and chaos engineering | [Toxiproxy](https://github.com/Shopify/toxiproxy), [Chaos Mesh](https://chaos-mesh.org/docs/), [LitmusChaos](https://docs.litmuschaos.io/) |
+| Policy as code | [Open Policy Agent](https://www.openpolicyagent.org/docs), [Kyverno](https://kyverno.io/docs/) |
+| Secrets and identity | [HashiCorp Vault](https://developer.hashicorp.com/vault/docs), [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/), [Azure Key Vault](https://learn.microsoft.com/azure/key-vault/), [Google Secret Manager](https://cloud.google.com/secret-manager/docs) |
+| Backup and cluster recovery | [Velero](https://velero.io/docs/) |
+| Incident response and on-call | [PagerDuty incident management](https://docs.pagerduty.com/incident-management/incidents/overview) |
+| Internal developer platforms | [Backstage documentation](https://backstage.io/docs/) |
+| Cloud cost estimation | [Infracost](https://www.infracost.io/docs/) |
 
-Official documentation evolves with product releases. Check the page's version selector and compatibility notes before copying configuration into a real environment. Cloud provider, registry, and secret-manager guides may create billable resources or require account credentials; follow those steps only when the corresponding study path calls for them.
+Official documentation evolves with product releases. Check the page's version selector and compatibility notes before copying configuration into a real environment. Some cloud, registry, hosted monitoring, and secret-manager guides require an account, credentials, or billable resources; follow those steps only when the corresponding study path calls for them.
 
 ## Database, monitoring, and deployment in plain terms
 
@@ -225,22 +251,48 @@ Ini adalah peta luas tools dan kategori yang banyak digunakan, bukan daftar lite
 
 ## Dokumentasi resmi dan panduan penggunaan
 
-Gunakan rujukan yang dikelola vendor atau proyek ini bersama study case. Mulai dari halaman konsep atau quickstart, lalu gunakan halaman referensi saat mengubah konfigurasi. Tautan ini mencakup tools representatif; daftarnya tidak menyeluruh.
+Gunakan rujukan yang dikelola vendor atau proyek bersama study case. Tautan berikut menuju panduan penggunaan, quickstart, atau referensi produk resmi. Daftar ini mencakup banyak pilihan lintas ekosistem, tetapi tidak mencakup setiap tool atau plugin.
 
-| Area | Dokumentasi resmi |
+| Area | Tools dan dokumentasi penggunaan resmi |
 | --- | --- |
-| Source control | [Dokumentasi dan manual Git](https://git-scm.com/docs) |
-| Container | [Panduan awal Docker](https://docs.docker.com/get-started/), [Docker Engine](https://docs.docker.com/engine/), dan [quickstart Docker Compose](https://docs.docker.com/compose/gettingstarted/) |
-| CI/CD | [GitHub Actions](https://docs.github.com/en/actions), [pipeline GitLab CI/CD](https://docs.gitlab.com/ci/pipelines/), dan [dokumentasi pengguna Jenkins](https://www.jenkins.io/doc/) |
-| Kubernetes dan packaging | [Konsep Kubernetes](https://kubernetes.io/docs/concepts/), [referensi kubectl](https://kubernetes.io/docs/reference/kubectl/), [quickstart Helm](https://helm.sh/docs/intro/quickstart/), dan [Kustomize](https://kubectl.docs.kubernetes.io/references/kustomize/) |
-| Otomasi infrastruktur | [Dokumentasi Terraform](https://developer.hashicorp.com/terraform/docs) dan [panduan awal Ansible](https://docs.ansible.com/projects/ansible/latest/user_guide/quickstart.html) |
-| Layanan data | [Tutorial PostgreSQL](https://www.postgresql.org/docs/current/tutorial.html) dan [quickstart Apache Kafka](https://kafka.apache.org/quickstart/) |
-| Metrics, logs, dan traces | [Panduan awal Prometheus](https://prometheus.io/docs/prometheus/latest/getting_started/), [dokumentasi Grafana](https://grafana.com/docs/grafana/latest/), [Grafana Loki](https://grafana.com/docs/loki/latest/), dan [dokumentasi OpenTelemetry](https://opentelemetry.io/docs/) |
-| Pengujian beban | [Dokumentasi Grafana k6](https://grafana.com/docs/k6/latest/) dan [membuat test k6 pertama](https://grafana.com/docs/k6/latest/get-started/write-your-first-test/) |
-| Policy as code | [Dokumentasi Open Policy Agent](https://www.openpolicyagent.org/docs) |
-| Bahasa pemrograman untuk tooling lab | [Tutorial dan dokumentasi bahasa Python](https://docs.python.org/3/) |
+| Sistem operasi dan shell | [Dokumentasi kernel Linux](https://docs.kernel.org/), [manual GNU Bash](https://www.gnu.org/software/bash/manual/), [manual OpenSSH](https://www.openssh.com/manual.html) |
+| Source control dan hosting kode | [Git](https://git-scm.com/docs), [GitHub Docs](https://docs.github.com/), [GitLab Docs](https://docs.gitlab.com/), [Bitbucket Cloud](https://support.atlassian.com/bitbucket-cloud/) |
+| Pelacakan pekerjaan dan kolaborasi | [GitHub Issues dan Projects](https://docs.github.com/en/issues), [issue tracking GitLab](https://docs.gitlab.com/user/project/issues/), [Jira](https://support.atlassian.com/jira-software-cloud/) |
+| CI/CD dan otomasi | [GitHub Actions](https://docs.github.com/en/actions), [GitLab CI/CD](https://docs.gitlab.com/ci/), [Jenkins](https://www.jenkins.io/doc/), [CircleCI](https://circleci.com/docs/) |
+| Build system dan package manager | [GNU Make](https://www.gnu.org/software/make/manual/), [Maven](https://maven.apache.org/guides/), [Gradle](https://docs.gradle.org/current/userguide/userguide.html), [npm](https://docs.npmjs.com/), [Python](https://docs.python.org/3/) |
+| Kualitas kode dan pembaruan dependency | [SonarQube](https://docs.sonarsource.com/), [Semgrep](https://semgrep.dev/docs/), [Dependabot](https://docs.github.com/en/code-security/dependabot), [Renovate](https://docs.renovatebot.com/) |
+| Deteksi secret dan pengujian keamanan aplikasi | [Gitleaks](https://github.com/gitleaks/gitleaks), [OWASP ZAP](https://www.zaproxy.org/docs/) |
+| Build dan runtime container | [Docker Engine](https://docs.docker.com/engine/), [Docker Compose](https://docs.docker.com/compose/gettingstarted/), [Podman](https://podman.io/docs), [Buildah](https://github.com/containers/buildah/tree/main/docs), [containerd](https://containerd.io/docs/) |
+| Registry image dan penyimpanan artifact | [Docker Hub](https://docs.docker.com/docker-hub/), [GitHub Packages / Container Registry](https://docs.github.com/en/packages), [Harbor](https://goharbor.io/docs/), [Amazon ECR](https://docs.aws.amazon.com/ecr/), [Azure Container Registry](https://learn.microsoft.com/azure/container-registry/), [Google Artifact Registry](https://cloud.google.com/artifact-registry/docs) |
+| Pemindaian container, kode, dan IaC | [Trivy](https://trivy.dev/docs/latest/guide/), [SBOM Syft](https://github.com/anchore/syft), [Grype](https://github.com/anchore/grype) |
+| Orkestrasi container | [Konsep Kubernetes](https://kubernetes.io/docs/concepts/), [referensi kubectl](https://kubernetes.io/docs/reference/kubectl/), [Red Hat OpenShift](https://docs.openshift.com/) |
+| Packaging dan kustomisasi Kubernetes | [Helm](https://helm.sh/docs/intro/quickstart/), [Kustomize](https://kubectl.docs.kubernetes.io/references/kustomize/) |
+| GitOps dan progressive delivery | [Argo CD](https://argo-cd.readthedocs.io/en/stable/), [Flux](https://fluxcd.io/flux/get-started/), [Argo Rollouts](https://argo-rollouts.readthedocs.io/en/stable/) |
+| Scheduler workload alternatif | [HashiCorp Nomad](https://developer.hashicorp.com/nomad/docs) |
+| Platform cloud | [Dokumentasi AWS](https://docs.aws.amazon.com/), [Microsoft Azure](https://learn.microsoft.com/azure/), [Google Cloud](https://docs.cloud.google.com/docs) |
+| Infrastructure as code | [Terraform](https://developer.hashicorp.com/terraform/docs), [OpenTofu](https://opentofu.org/docs/), [Pulumi](https://www.pulumi.com/docs/), [AWS CDK](https://docs.aws.amazon.com/cdk/), [AWS CloudFormation](https://docs.aws.amazon.com/cloudformation/) |
+| Otomasi host dan konfigurasi | [Ansible](https://docs.ansible.com/projects/ansible/latest/user_guide/quickstart.html), [Puppet](https://help.puppet.com/core/current/Content/PuppetCore/puppet_index.htm), [quickstart Chef Infra](https://docs.chef.io/client/19/quickstart/) |
+| Reverse proxy, ingress, dan TLS | [NGINX](https://docs.nginx.com/), [Traefik](https://doc.traefik.io/traefik/), [HAProxy](https://docs.haproxy.org/), [Envoy](https://www.envoyproxy.io/docs), [cert-manager](https://cert-manager.io/docs/) |
+| API gateway dan edge | [Kong Gateway](https://developer.konghq.com/gateway/), [AWS API Gateway](https://docs.aws.amazon.com/apigateway/), [dokumentasi developer Cloudflare](https://developers.cloudflare.com/) |
+| Service mesh dan network policy | [Istio](https://istio.io/latest/docs/), [Linkerd](https://linkerd.io/docs/overview/), [Cilium](https://docs.cilium.io/) |
+| Database relasional dan dokumen | [Tutorial PostgreSQL](https://www.postgresql.org/docs/current/tutorial.html), [manual referensi MySQL](https://dev.mysql.com/doc/), [manual MongoDB](https://www.mongodb.com/docs/manual/) |
+| Cache dan data in-memory | [Dokumentasi dan quickstart Redis](https://redis.io/docs/latest/) |
+| Message broker dan event streaming | [Quickstart Apache Kafka](https://kafka.apache.org/quickstart/), [tutorial RabbitMQ](https://www.rabbitmq.com/tutorials) |
+| Metrics dan dashboard | [Prometheus](https://prometheus.io/docs/prometheus/latest/getting_started/), [Grafana](https://grafana.com/docs/grafana/latest/) |
+| Logs dan pencarian | [Grafana Loki](https://grafana.com/docs/loki/latest/), [Elastic Stack](https://www.elastic.co/guide/index.html), [OpenSearch](https://docs.opensearch.org/latest/) |
+| Traces dan standar telemetry | [OpenTelemetry](https://opentelemetry.io/docs/), [Jaeger](https://www.jaegertracing.io/docs/latest/), [Grafana Tempo](https://grafana.com/docs/tempo/latest/) |
+| Observability hosted | [Dokumentasi Datadog](https://docs.datadoghq.com/), [dokumentasi New Relic](https://docs.newrelic.com/) |
+| Pengujian otomatis dan API | [pytest](https://docs.pytest.org/en/stable/), [Postman](https://learning.postman.com/docs/), [Playwright](https://playwright.dev/docs/intro) |
+| Pengujian beban dan performa | [Grafana k6](https://grafana.com/docs/k6/latest/), termasuk [panduan test pertama](https://grafana.com/docs/k6/latest/get-started/write-your-first-test/) |
+| Fault injection dan chaos engineering | [Toxiproxy](https://github.com/Shopify/toxiproxy), [Chaos Mesh](https://chaos-mesh.org/docs/), [LitmusChaos](https://docs.litmuschaos.io/) |
+| Policy as code | [Open Policy Agent](https://www.openpolicyagent.org/docs), [Kyverno](https://kyverno.io/docs/) |
+| Secret dan identity | [HashiCorp Vault](https://developer.hashicorp.com/vault/docs), [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/), [Azure Key Vault](https://learn.microsoft.com/azure/key-vault/), [Google Secret Manager](https://cloud.google.com/secret-manager/docs) |
+| Backup dan pemulihan cluster | [Velero](https://velero.io/docs/) |
+| Incident response dan on-call | [Manajemen incident PagerDuty](https://docs.pagerduty.com/incident-management/incidents/overview) |
+| Internal developer platform | [Dokumentasi Backstage](https://backstage.io/docs/) |
+| Estimasi biaya cloud | [Infracost](https://www.infracost.io/docs/) |
 
-Dokumentasi resmi berubah mengikuti rilis produk. Periksa pemilih versi dan catatan kompatibilitas sebelum menyalin konfigurasi ke environment sungguhan. Panduan penyedia cloud, registry, dan secret manager mungkin membuat resource berbayar atau memerlukan kredensial akun; ikuti langkah tersebut hanya jika jalur study case memang membutuhkannya.
+Dokumentasi resmi berubah mengikuti rilis produk. Periksa pemilih versi dan catatan kompatibilitas sebelum menyalin konfigurasi ke environment sungguhan. Sebagian panduan cloud, registry, monitoring hosted, dan secret manager memerlukan akun, kredensial, atau resource berbayar; ikuti langkah tersebut hanya jika jalur study case memang membutuhkannya.
 
 ## Database, monitoring, dan deployment dengan bahasa sederhana
 
