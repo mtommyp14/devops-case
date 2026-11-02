@@ -14,6 +14,8 @@ Practice data recovery, incident response, pull request environments, and safer 
 
 Four local, Docker-based labs for practicing data reliability, incident recovery, developer environments, and policy-controlled deployment. Sample records and credentials are synthetic. These labs create no cloud resources and are not production deployments.
 
+**Looking up a DevOps tool?** Use the [DevOps Tools Reference](case-00-devops-foundations/README.md) for tool categories, workspace status, and official documentation links alongside the hands-on study cases.
+
 **Choose your setup:** Docker Compose runs all four cases. Kubernetes manifests are available as an optional learning track for Case 02. [Follow the setup paths](docs/learning-paths.md) · [Learn how to use AI safely](docs/learning-with-ai.md).
 
 ## Explore the cases
@@ -161,6 +163,8 @@ The original code and documentation in this repository are licensed under the [M
 # Laboratorium Praktik DevOps
 
 Empat lab lokal berbasis Docker untuk mempraktikkan keandalan data, pemulihan insiden, environment developer, dan deployment dengan kontrol policy. Semua record contoh dan kredensial merupakan placeholder sintetis. Lab ini tidak membuat resource cloud dan bukan deployment produksi.
+
+**Mencari referensi tools DevOps?** Gunakan [Referensi Tools DevOps](case-00-devops-foundations/README.md) untuk melihat kategori, status penggunaan di workspace, dan tautan dokumentasi resmi pendamping study case.
 
 **Pilih setup:** Docker Compose dapat menjalankan keempat case. Manifest Kubernetes tersedia sebagai jalur belajar opsional untuk Case 02. [Ikuti panduan setup](docs/learning-paths.md) · [Pelajari cara memakai AI dengan aman](docs/learning-with-ai.md).
 
