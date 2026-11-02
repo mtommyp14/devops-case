@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: case-01-replay
+  namespace: case-01
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 300
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: case-01-replay
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: replay
+          image: case-01-lab:local
+          imagePullPolicy: IfNotPresent
+          args: ["recover", "--run-id", "hardened"]
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: case-01-demo-secrets
+                  key: postgres-password
+            - name: DATABASE_URL
+              value: postgresql://lab:$(POSTGRES_PASSWORD)@postgres:5432/consent_lab
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi

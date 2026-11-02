@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: opa
+spec:
+  selector:
+    app.kubernetes.io/name: opa
+  ports:
+    - name: http
+      port: 8181
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: target
+spec:
+  selector:
+    app.kubernetes.io/name: target
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

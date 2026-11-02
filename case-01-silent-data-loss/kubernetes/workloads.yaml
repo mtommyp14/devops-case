@@ -1,0 +1,163 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: case-01-prometheus-config
+  namespace: case-01
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 5s
+    rule_files:
+      - /etc/prometheus/alerts.yml
+    scrape_configs:
+      - job_name: consent-lab
+        static_configs:
+          - targets: ["metrics:8000"]
+  alerts.yml: |
+    groups:
+      - name: consent-data-reliability
+        rules:
+          - alert: ConsentEventsUnaccounted
+            expr: consent_lab_unaccounted_events > 0
+            for: 15s
+            labels:
+              severity: critical
+            annotations:
+              summary: Consent source events have no durable sink or quarantine outcome
+              description: Reconcile source ledger IDs against sink and pending quarantine before replay.
+          - alert: ConsentQuarantinePending
+            expr: consent_lab_pending_quarantine_events > 0
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: Consent events are waiting for schema review and recovery
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics
+  namespace: case-01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: metrics
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: metrics
+    spec:
+      containers:
+        - name: metrics
+          image: case-01-lab:local
+          imagePullPolicy: IfNotPresent
+          command: ["python", "-m", "lab", "metrics"]
+          ports:
+            - name: metrics
+              containerPort: 8000
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: case-01-demo-secrets
+                  key: postgres-password
+            - name: DATABASE_URL
+              value: postgresql://lab:$(POSTGRES_PASSWORD)@postgres:5432/consent_lab
+            - name: METRICS_PORT
+              value: "8000"
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+            periodSeconds: 5
+            timeoutSeconds: 3
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrics
+  namespace: case-01
+spec:
+  selector:
+    app.kubernetes.io/name: metrics
+  ports:
+    - name: metrics
+      port: 8000
+      targetPort: metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: case-01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus:v3.1.0
+          args:
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.path=/prometheus
+            - --storage.tsdb.retention.time=1d
+          ports:
+            - name: web
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: web
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /-/healthy
+              port: web
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          volumeMounts:
+            - name: config
+              mountPath: /etc/prometheus
+              readOnly: true
+            - name: data
+              mountPath: /prometheus
+      volumes:
+        - name: config
+          configMap:
+            name: case-01-prometheus-config
+        - name: data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: case-01
+spec:
+  selector:
+    app.kubernetes.io/name: prometheus
+  ports:
+    - name: web
+      port: 9090
+      targetPort: web

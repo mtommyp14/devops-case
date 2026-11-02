@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opa
+  labels:
+    app.kubernetes.io/name: opa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: opa
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: opa
+    spec:
+      containers:
+        - name: opa
+          image: openpolicyagent/opa:1.0.0
+          args: ["run", "--server", "--addr=0.0.0.0:8181", "/policy/deployment.rego"]
+          ports:
+            - name: http
+              containerPort: 8181
+          volumeMounts:
+            - name: policy
+              mountPath: /policy
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 5
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+      volumes:
+        - name: policy
+          configMap:
+            name: case-04-policy
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: target
+  labels:
+    app.kubernetes.io/name: target
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: target
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: target
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: target
+          image: case-04-app:local
+          imagePullPolicy: IfNotPresent
+          command: ["python", "target.py"]
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: DUMMY_DEPLOY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: case-04-demo-secrets
+                  key: deploy-token
+            - name: FAIL_RELEASE
+              value: v2-bad
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 3
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              # Keep the mock target reachable so the controller can observe
+              # a bad release and exercise its explicit rollback flow.
+              path: /state
+              port: http
+            periodSeconds: 3
+            failureThreshold: 2
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi

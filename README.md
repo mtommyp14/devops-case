@@ -18,7 +18,7 @@ This repository contains four hands-on DevOps study cases. Each case focuses on 
 
 **Looking for tool references?** The [DevOps Tools Reference](case-00-devops-foundations/README.md) maps common tools to their roles, shows which ones are present here, and links to official usage documentation.
 
-**Choose a setup path:** Use [Docker Compose](docs/learning-paths.md) for the local labs. Case 02 also has optional [Kubernetes manifests](case-02-incident-recovery/docs/kubernetes.md). If you use an AI assistant, follow [Learning with AI](docs/learning-with-ai.md).
+**How to use these labs:** All four cases run as separate Docker Compose projects, so you can choose a scenario, start its local services, follow its guide, and clean up its resources independently. Production workloads may use virtual machines, container platforms, Kubernetes, or managed and serverless cloud services; the appropriate option depends on the workload and operational requirements. See [setup paths](docs/learning-paths.md), the [DevOps Tools Reference](case-00-devops-foundations/README.md), and [Learning with AI](docs/learning-with-ai.md). Each study-case card links to its guide and any additional deployment artifacts.
 
 ## Study cases
 
@@ -29,7 +29,7 @@ This repository contains four hands-on DevOps study cases. Each case focuses on 
       <br><strong>01 · Silent data loss</strong><br>
       Detect schema drift, quarantine invalid events, reconcile IDs, and replay safely.<br>
       <sub>Stack: Kafka · PostgreSQL · Python · Prometheus</sub><br>
-      <sub><a href="case-01-silent-data-loss/docs/build-and-run.md">Build and run</a> · <a href="case-01-silent-data-loss/docs/test-evidence.md">Test evidence</a></sub>
+      <sub><a href="case-01-silent-data-loss/docs/build-and-run.md">Build and run</a> · <a href="case-01-silent-data-loss/docs/test-evidence.md">Test evidence</a> · <a href="case-01-silent-data-loss/docs/kubernetes.md">Kubernetes path</a></sub>
     </td>
     <td align="center" width="50%">
       <a href="case-02-incident-recovery/docs/build-and-run.md"><img src="case-02-incident-recovery/docs/case-02-flow.svg" width="100%" alt="Case 02: investigate a canary regression, gate promotion, and recover"></a>
@@ -45,14 +45,14 @@ This repository contains four hands-on DevOps study cases. Each case focuses on 
       <br><strong>03 · Developer platform</strong><br>
       Provision isolated pull request previews with synthetic data and scoped cleanup.<br>
       <sub>Stack: Python · Docker Compose · PostgreSQL</sub><br>
-      <sub><a href="case-03-developer-platform/docs/build-and-run.md">Build and run</a> · <a href="case-03-developer-platform/docs/test-evidence.md">Isolation and cleanup evidence</a></sub>
+      <sub><a href="case-03-developer-platform/docs/build-and-run.md">Build and run</a> · <a href="case-03-developer-platform/docs/test-evidence.md">Isolation and cleanup evidence</a> · <a href="case-03-developer-platform/docs/kubernetes.md">Kubernetes path</a></sub>
     </td>
     <td align="center" width="50%">
       <a href="case-04-safe-ai-deployment/docs/build-and-run.md"><img src="case-04-safe-ai-deployment/docs/case-04-flow.svg" width="100%" alt="Case 04: sandbox proposed deployment changes and enforce policy and approval gates"></a>
       <br><strong>04 · Safe AI deployment</strong><br>
       Sandbox proposed changes, enforce policy, limit secrets, and gate risky actions.<br>
       <sub>Stack: Docker Compose · OPA · Python</sub><br>
-      <sub><a href="case-04-safe-ai-deployment/docs/build-and-run.md">Build and run</a> · <a href="case-04-safe-ai-deployment/docs/test-evidence.md">Policy and rollback evidence</a></sub>
+      <sub><a href="case-04-safe-ai-deployment/docs/build-and-run.md">Build and run</a> · <a href="case-04-safe-ai-deployment/docs/test-evidence.md">Policy and rollback evidence</a> · <a href="case-04-safe-ai-deployment/docs/kubernetes.md">Kubernetes path</a></sub>
     </td>
   </tr>
 </table>
@@ -71,10 +71,10 @@ Start Docker first, then run commands from the relevant case directory. Validate
 
 | Case | Start the lab | Full guide |
 | --- | --- | --- |
-| 01 · Silent data loss | `cd case-01-silent-data-loss` then `docker compose up -d --build` | [Build and run](case-01-silent-data-loss/docs/build-and-run.md) |
-| 02 · Incident recovery | `cd case-02-incident-recovery` then `docker compose up -d --build` | [Build and run](case-02-incident-recovery/docs/build-and-run.md) |
-| 03 · Developer platform | `cd case-03-developer-platform` then `python3 envctl.py provision --pr 42 --generation 1 --port 18421` | [Build and run](case-03-developer-platform/docs/build-and-run.md) |
-| 04 · Safe AI deployment | `cd case-04-safe-ai-deployment` then `docker compose up -d --build volume-init opa target` | [Build and run](case-04-safe-ai-deployment/docs/build-and-run.md) |
+| 01 · Silent data loss | `cd case-01-silent-data-loss` then `docker compose up -d --build` | [Compose guide](case-01-silent-data-loss/docs/build-and-run.md) · [Kubernetes YAML](case-01-silent-data-loss/docs/kubernetes.md) |
+| 02 · Incident recovery | `cd case-02-incident-recovery` then `docker compose up -d --build` | [Compose guide](case-02-incident-recovery/docs/build-and-run.md) · [Kubernetes YAML](case-02-incident-recovery/docs/kubernetes.md) |
+| 03 · Developer platform | `cd case-03-developer-platform` then `python3 envctl.py provision --pr 42 --generation 1 --port 18421` | [Compose guide](case-03-developer-platform/docs/build-and-run.md) · [Kubernetes YAML](case-03-developer-platform/docs/kubernetes.md) |
+| 04 · Safe AI deployment | `cd case-04-safe-ai-deployment` then `docker compose up -d --build volume-init opa target` | [Compose guide](case-04-safe-ai-deployment/docs/build-and-run.md) · [Kubernetes YAML](case-04-safe-ai-deployment/docs/kubernetes.md) |
 
 Case 01 needs an additional seed command and the other cases have scenario-specific steps. Follow each guide for the complete sequence, expected behavior, service URLs, and troubleshooting.
 
@@ -125,16 +125,16 @@ Repository ini berisi empat study case praktik DevOps. Setiap case membahas masa
 
 **Mencari referensi tools?** [Referensi Tools DevOps](case-00-devops-foundations/README.md) memetakan fungsi kategori tools, menunjukkan mana yang tersedia di sini, dan menyediakan tautan dokumentasi penggunaan resmi.
 
-**Pilih jalur setup:** Gunakan [Docker Compose](docs/learning-paths.md) untuk menjalankan lab lokal. Case 02 juga menyediakan [manifest Kubernetes opsional](case-02-incident-recovery/docs/kubernetes.md). Jika menggunakan asisten AI, ikuti panduan [Belajar dengan AI](docs/learning-with-ai.md).
+**Cara menggunakan lab:** Keempat case berjalan sebagai project Docker Compose terpisah. Pilih skenario, jalankan service lokalnya, ikuti panduan, lalu bersihkan resource lab secara mandiri. Workload produksi dapat berjalan di virtual machine, platform container, Kubernetes, atau layanan cloud terkelola dan serverless; pilihan yang sesuai bergantung pada workload dan kebutuhan operasional. Lihat [pilihan setup](docs/learning-paths.md), [Referensi Tools DevOps](case-00-devops-foundations/README.md), dan panduan [Belajar dengan AI](docs/learning-with-ai.md). Kartu tiap case menautkan panduan dan file deployment tambahan jika tersedia.
 
 ## Daftar study case
 
 | Case | Skenario dan komponen | Panduan |
 | --- | --- | --- |
-| 01 · Kehilangan data senyap | Deteksi schema drift, karantina event tidak valid, rekonsiliasi ID, dan replay dengan aman. **Stack:** Kafka · PostgreSQL · Python · Prometheus | [Build dan jalankan](case-01-silent-data-loss/docs/build-and-run.md) · [Bukti test](case-01-silent-data-loss/docs/test-evidence.md) |
-| 02 · Pemulihan insiden | Investigasi latensi/error, gate canary, rollback, dan load shedding. **Stack:** Python · PostgreSQL · Prometheus · k6 | [Build dan jalankan](case-02-incident-recovery/docs/build-and-run.md) · [Bukti load test](case-02-incident-recovery/docs/test-evidence.md) · [Jalur Kubernetes](case-02-incident-recovery/docs/kubernetes.md) |
-| 03 · Platform developer | Preview pull request terisolasi dengan data sintetis dan cleanup terbatas. **Stack:** Python · Docker Compose · PostgreSQL | [Build dan jalankan](case-03-developer-platform/docs/build-and-run.md) · [Bukti isolasi dan cleanup](case-03-developer-platform/docs/test-evidence.md) |
-| 04 · Deployment AI yang aman | Sandbox proposal perubahan dengan pemeriksaan policy dan gate approval. **Stack:** Docker Compose · OPA · Python | [Build dan jalankan](case-04-safe-ai-deployment/docs/build-and-run.md) · [Bukti policy dan rollback](case-04-safe-ai-deployment/docs/test-evidence.md) |
+| 01 · Kehilangan data senyap | Deteksi schema drift, karantina event tidak valid, rekonsiliasi ID, dan replay dengan aman. **Stack:** Kafka · PostgreSQL · Python · Prometheus | [Compose](case-01-silent-data-loss/docs/build-and-run.md) · [Kubernetes YAML](case-01-silent-data-loss/docs/kubernetes.md) · [Bukti test](case-01-silent-data-loss/docs/test-evidence.md) |
+| 02 · Pemulihan insiden | Investigasi latensi/error, gate canary, rollback, dan load shedding. **Stack:** Python · PostgreSQL · Prometheus · k6 | [Compose](case-02-incident-recovery/docs/build-and-run.md) · [Kubernetes YAML](case-02-incident-recovery/docs/kubernetes.md) · [Bukti load test](case-02-incident-recovery/docs/test-evidence.md) |
+| 03 · Platform developer | Preview pull request terisolasi dengan data sintetis dan cleanup terbatas. **Stack:** Python · Docker Compose · PostgreSQL | [Compose](case-03-developer-platform/docs/build-and-run.md) · [Kubernetes YAML](case-03-developer-platform/docs/kubernetes.md) · [Bukti isolasi dan cleanup](case-03-developer-platform/docs/test-evidence.md) |
+| 04 · Deployment AI yang aman | Sandbox proposal perubahan dengan pemeriksaan policy dan gate approval. **Stack:** Docker Compose · OPA · Python | [Compose](case-04-safe-ai-deployment/docs/build-and-run.md) · [Kubernetes YAML](case-04-safe-ai-deployment/docs/kubernetes.md) · [Bukti policy dan rollback](case-04-safe-ai-deployment/docs/test-evidence.md) |
 
 Case 04 menggunakan fixture proposal tetap untuk mendemonstrasikan deployment dengan guardrail; case ini tidak memanggil model AI. Semua record dan kredensial demo bersifat sintetis atau sementara.
 

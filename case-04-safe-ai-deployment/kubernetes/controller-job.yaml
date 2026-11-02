@@ -1,0 +1,73 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: deployment-controller
+  namespace: case-04
+  labels:
+    app.kubernetes.io/role: controller
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 120
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/role: controller
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: controller
+          image: case-04-app:local
+          imagePullPolicy: IfNotPresent
+          command: ["python", "controller.py", "apply"]
+          env:
+            - name: PLAN_FILE
+              value: /plans/plan.json
+            - name: AUDIT_FILE
+              value: /audit/events.jsonl
+            - name: OPA_URL
+              value: http://opa:8181
+            - name: TARGET_URL
+              value: http://target:8080
+            - name: DUMMY_DEPLOY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: case-04-demo-secrets
+                  key: deploy-token
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 160Mi
+          volumeMounts:
+            - name: plan-data
+              mountPath: /plans
+              readOnly: true
+            - name: audit-data
+              mountPath: /audit
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: plan-data
+          persistentVolumeClaim:
+            claimName: plan-data
+        - name: audit-data
+          persistentVolumeClaim:
+            claimName: audit-data
+        - name: tmp
+          emptyDir:
+            sizeLimit: 16Mi

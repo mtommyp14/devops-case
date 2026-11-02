@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: case-03-pr-42-g1
+  labels:
+    app.kubernetes.io/part-of: devops-practice-labs
+    app.kubernetes.io/name: developer-platform-preview
+    portfolio.example.com/pull-request: "42"
+    portfolio.example.com/generation: "1"

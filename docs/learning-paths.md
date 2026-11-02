@@ -6,14 +6,14 @@
 
 ## Choose a way to run the labs
 
-Every case includes a `compose.yaml`. Docker Compose is the recommended starting point: it runs all four cases locally and does not require a Kubernetes cluster. Kubernetes manifests are an optional next step and currently cover **Case 02 only**. Both formats are YAML, but a Compose file is not a Kubernetes manifest; each is read by a different tool and describes different resources.
+Every case includes a `compose.yaml` and a Kubernetes manifest directory named `kubernetes/`. Docker Compose is the easiest local starting point. Kubernetes is an optional deployment track for all four cases; each track has its own guide, prerequisites, and scope. Both formats use YAML, but Compose files and Kubernetes manifests describe different resources and are applied with different tools.
 
 | Track | Choose this when… | Where to go |
 | --- | --- | --- |
 | Docker Compose | You want the shortest route through any of the four cases. | Start below, then use the chosen case's build/run guide. |
-| Kubernetes | You want to learn Deployments, Services, StatefulSets, probes, and Jobs with the incident-recovery scenario. | Follow the [Case 02 Kubernetes guide](../case-02-incident-recovery/docs/kubernetes.md). |
+| Kubernetes | You want to practice Kubernetes resources and workflows for a particular scenario. | Choose one: [Case 01](../case-01-silent-data-loss/docs/kubernetes.md) · [Case 02](../case-02-incident-recovery/docs/kubernetes.md) · [Case 03](../case-03-developer-platform/docs/kubernetes.md) · [Case 04](../case-04-safe-ai-deployment/docs/kubernetes.md). |
 
-The Kubernetes track is not yet available for Cases 01, 03, or 04. The scenarios are designed to be similar, but Compose and Kubernetes results can differ because networking, scheduling, storage, resource limits, and scaling behave differently.
+Kubernetes resources are learning examples with case-specific limits. Compose and Kubernetes behavior can differ because networking, scheduling, storage, permissions, resource limits, and cleanup behave differently. Read the chosen case's Kubernetes guide before applying manifests.
 
 ## Track A — Docker Compose (all four cases)
 
@@ -63,25 +63,32 @@ python3 envctl.py cleanup --pr 42
 
 Use the same pull request number you provisioned. Read the case guide before cleanup if you want to keep evidence or data.
 
-## Track B — Kubernetes (Case 02 only)
+## Track B — Kubernetes (all four cases)
 
-Use the [Case 02 Kubernetes guide](../case-02-incident-recovery/docs/kubernetes.md) for the complete manifest walkthrough. In short, the local `kind` route is:
+Choose a case-specific guide for complete image build/load, apply, scenario, and cleanup steps:
 
-1. Install and start Docker; install [`kubectl`](https://kubernetes.io/docs/tasks/tools/) and [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start/).
-2. From the repository root, create a local cluster and check the active context:
+- [Case 01 — silent data loss](../case-01-silent-data-loss/docs/kubernetes.md)
+- [Case 02 — incident recovery](../case-02-incident-recovery/docs/kubernetes.md)
+- [Case 03 — developer platform](../case-03-developer-platform/docs/kubernetes.md)
+- [Case 04 — safe AI deployment](../case-04-safe-ai-deployment/docs/kubernetes.md)
+
+The guides use local clusters such as `kind` or minikube. One shared local cluster can host the cases in separate namespaces; Case 02's guide also describes its standalone `case02` kind cluster. Always check `kubectl config current-context` before applying YAML.
+
+1. Install and start Docker; install [`kubectl`](https://kubernetes.io/docs/tasks/tools/) and a local cluster tool such as [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start/) or minikube.
+2. Create a local cluster if needed, then check the active context:
 
    ```sh
-   kind create cluster --name case02 --wait 2m
+   kind create cluster --name devops-labs --wait 2m
    kubectl config current-context
    kubectl get nodes -o wide
    ```
 
-   The current context should be `kind-case02`. Do not apply these lab manifests until you have confirmed the context is the local learning cluster you intend to use.
-3. Follow the Case 02 guide to build `case-02-app:local`, load it into kind, create the local demo Secret, and apply `kubernetes/`.
-4. Use `kubectl port-forward` for the router and Prometheus, then connect `labctl.py` and run the optional k6 Job as documented.
-5. Remove the `case-02` namespace after the lab. To remove the whole local cluster too, run `kind delete cluster --name case02`.
+   The current context should be `kind-devops-labs`. Do not apply these lab manifests until you have confirmed the context is the local learning cluster you intend to use.
+3. Follow the selected case guide to build/load its image, create its local demo Secret or ConfigMaps when required, then apply the case's `kubernetes/` directory or documented Jobs.
+4. Follow that guide for readiness checks, scenario commands, port-forwarding, and expected results.
+5. Delete only the case namespace named in that guide. To delete the shared local cluster, run `kind delete cluster --name devops-labs` after finishing every case.
 
-`kind` runs Kubernetes nodes as containers on your machine; it does not create a cloud cluster. Give Docker Desktop enough CPU and memory for the cluster and lab pods. The manifests include a 1 GiB PostgreSQL PVC, so the cluster also needs a default StorageClass that supports `ReadWriteOnce` claims.
+`kind` runs Kubernetes nodes as containers on your machine; it does not create a cloud cluster. Give Docker Desktop enough CPU and memory for the cluster and lab pods. The cases with database or state PVCs need a default StorageClass that supports `ReadWriteOnce` claims. Case 01 includes Kafka and needs additional memory. Each Kubernetes guide describes its own limits, including cleanup behavior.
 
 ## Learn with AI
 
@@ -91,14 +98,14 @@ AI tools can explain a manifest, help interpret a sanitized error, or suggest a 
 
 ## Pilih cara menjalankan lab
 
-Setiap case memiliki file `compose.yaml`. Docker Compose adalah awal yang disarankan: tool ini menjalankan keempat case secara lokal tanpa memerlukan Kubernetes cluster. Manifest Kubernetes merupakan jalur lanjutan yang opsional dan saat ini hanya tersedia untuk **Case 02**. Keduanya menggunakan YAML, tetapi file Compose bukan manifest Kubernetes; masing-masing dibaca oleh tool berbeda dan mendeskripsikan resource berbeda.
+Setiap case memiliki `compose.yaml` dan direktori manifest Kubernetes bernama `kubernetes/`. Docker Compose adalah awal lokal yang paling mudah. Kubernetes merupakan jalur deployment opsional untuk keempat case; setiap jalur punya panduan, prasyarat, dan cakupan tersendiri. Keduanya memakai YAML, tetapi file Compose dan manifest Kubernetes mendeskripsikan resource berbeda dan diterapkan dengan tool yang berbeda.
 
 | Jalur | Pilih jika… | Panduan |
 | --- | --- | --- |
 | Docker Compose | Ingin mulai paling cepat untuk salah satu dari empat case. | Ikuti langkah di bawah, lalu buka panduan build/run case pilihan. |
-| Kubernetes | Ingin belajar Deployment, Service, StatefulSet, probe, dan Job pada skenario pemulihan insiden. | Ikuti [panduan Kubernetes Case 02](../case-02-incident-recovery/docs/kubernetes.md). |
+| Kubernetes | Ingin berlatih resource dan workflow Kubernetes untuk skenario tertentu. | Pilih salah satu: [Case 01](../case-01-silent-data-loss/docs/kubernetes.md) · [Case 02](../case-02-incident-recovery/docs/kubernetes.md) · [Case 03](../case-03-developer-platform/docs/kubernetes.md) · [Case 04](../case-04-safe-ai-deployment/docs/kubernetes.md). |
 
-Jalur Kubernetes belum tersedia untuk Case 01, 03, dan 04. Skenarionya dirancang serupa, tetapi hasil Compose dan Kubernetes dapat berbeda karena cara kerja jaringan, scheduling, storage, batas resource, dan scaling berbeda.
+Resource Kubernetes adalah contoh belajar dengan batasan spesifik per case. Perilaku Compose dan Kubernetes dapat berbeda karena jaringan, scheduling, storage, permission, batas resource, dan cleanup berjalan berbeda. Baca panduan Kubernetes case yang dipilih sebelum menerapkan manifest.
 
 ## Jalur A — Docker Compose (semua empat case)
 
@@ -148,25 +155,32 @@ python3 envctl.py cleanup --pr 42
 
 Gunakan nomor pull request yang sama dengan saat provisioning. Baca panduan case sebelum cleanup jika ingin menyimpan bukti atau data.
 
-## Jalur B — Kubernetes (hanya Case 02)
+## Jalur B — Kubernetes (semua case)
 
-Ikuti [panduan Kubernetes Case 02](../case-02-incident-recovery/docs/kubernetes.md) untuk langkah manifest lengkap. Ringkasnya, jalur lokal dengan `kind` adalah:
+Pilih panduan case untuk instruksi lengkap build/load image, apply, skenario, dan cleanup:
 
-1. Pasang dan jalankan Docker; pasang [`kubectl`](https://kubernetes.io/docs/tasks/tools/) dan [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start/).
-2. Dari root repo, buat cluster lokal dan periksa context aktif:
+- [Case 01 — kehilangan data senyap](../case-01-silent-data-loss/docs/kubernetes.md)
+- [Case 02 — pemulihan insiden](../case-02-incident-recovery/docs/kubernetes.md)
+- [Case 03 — platform developer](../case-03-developer-platform/docs/kubernetes.md)
+- [Case 04 — deployment AI aman](../case-04-safe-ai-deployment/docs/kubernetes.md)
+
+Panduan menggunakan cluster lokal seperti `kind` atau minikube. Satu cluster lokal bersama dapat menjalankan case di namespace terpisah; panduan Case 02 juga menjelaskan cluster kind mandiri bernama `case02`. Selalu periksa `kubectl config current-context` sebelum menerapkan YAML.
+
+1. Pasang dan jalankan Docker; pasang [`kubectl`](https://kubernetes.io/docs/tasks/tools/) dan tool cluster lokal seperti [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start/) atau minikube.
+2. Buat cluster lokal jika belum tersedia, lalu periksa context aktif:
 
    ```sh
-   kind create cluster --name case02 --wait 2m
+   kind create cluster --name devops-labs --wait 2m
    kubectl config current-context
    kubectl get nodes -o wide
    ```
 
-   Context yang aktif seharusnya `kind-case02`. Pastikan context adalah cluster belajar lokal yang benar sebelum menerapkan manifest lab.
-3. Ikuti panduan Case 02 untuk membangun `case-02-app:local`, memuat image ke kind, membuat Secret demo lokal, dan menerapkan isi folder `kubernetes/`.
-4. Gunakan `kubectl port-forward` untuk router dan Prometheus, lalu hubungkan `labctl.py` dan jalankan Job k6 opsional sesuai instruksi.
-5. Hapus namespace `case-02` setelah lab selesai. Untuk menghapus seluruh cluster lokal, jalankan `kind delete cluster --name case02`.
+   Context yang aktif seharusnya `kind-devops-labs`. Pastikan context adalah cluster belajar lokal yang benar sebelum menerapkan manifest lab.
+3. Ikuti panduan case pilihan untuk build/muat image, membuat Secret atau ConfigMap demo lokal jika dibutuhkan, lalu menerapkan folder `kubernetes/` atau Job sesuai petunjuk.
+4. Ikuti panduan tersebut untuk pemeriksaan kesiapan, perintah skenario, port-forward, dan hasil yang diharapkan.
+5. Hapus hanya namespace case yang disebut dalam panduannya. Untuk menghapus shared cluster lokal setelah semua case selesai, jalankan `kind delete cluster --name devops-labs`.
 
-`kind` menjalankan node Kubernetes sebagai container di mesin sendiri; tool ini tidak membuat cluster cloud. Sediakan CPU dan memori Docker Desktop yang cukup untuk cluster dan Pod lab. Manifest memakai PVC PostgreSQL 1 GiB, sehingga cluster perlu StorageClass default yang mendukung claim `ReadWriteOnce`.
+`kind` menjalankan node Kubernetes sebagai container di mesin sendiri; tool ini tidak membuat cluster cloud. Sediakan CPU dan memori Docker Desktop yang cukup untuk cluster dan Pod lab. Case yang memakai database atau PVC state membutuhkan StorageClass default yang mendukung claim `ReadWriteOnce`. Case 01 juga menjalankan Kafka dan memerlukan memori tambahan. Setiap panduan Kubernetes menjelaskan batasan, termasuk cara cleanup.
 
 ## Belajar dengan AI
 

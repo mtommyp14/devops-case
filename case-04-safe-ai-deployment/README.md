@@ -12,6 +12,8 @@ Mendemonstrasikan AI yang membantu menyusun perubahan deployment, dengan sandbox
 ## Arsitektur Docker lab
 Docker Compose menjalankan agent fixture deterministik tanpa jaringan, policy evaluator OPA, deployment controller, dan target aplikasi mock. Agent hanya menulis proposal ke volume; controller di luar sandbox meminta keputusan OPA, memerlukan hash approval untuk perubahan berisiko, lalu memanggil API target. Docker socket tidak dipasang ke container mana pun.
 
+Jalur Kubernetes opsional tersedia di [`kubernetes/`](kubernetes/) dengan [panduan deployment](docs/kubernetes.md). Pembatasan NetworkPolicy hanya berlaku jika CNI cluster mendukungnya; periksa batasan dan langkah setup di panduan tersebut.
+
 ## Alur perubahan
 1. Operator memberi tugas dan konteks tersanitasi. File repo, log, serta output tool diperlakukan sebagai data tidak tepercaya, termasuk instruksi yang mencoba mengubah policy.
 2. Agent menyusun diff dan rencana di sandbox non-root: filesystem utama read-only, workspace sementara, capability di-drop, resource limit, serta tanpa Docker socket/host mount.
@@ -53,6 +55,8 @@ Demonstrate deployment changes assisted by an AI-style proposal flow, with sandb
 
 ### Docker lab architecture
 Docker Compose runs a deterministic fixture agent without network access, an OPA policy evaluator, a deployment controller, and a mock application target. The agent only writes a proposal to a shared volume. The controller runs outside the sandbox, requests an OPA decision, requires a hash-bound approval for risky changes, then calls the target API. No container receives the Docker socket.
+
+An optional Kubernetes path is available under [`kubernetes/`](kubernetes/) with a [deployment guide](docs/kubernetes.md). NetworkPolicy enforcement requires a cluster CNI that supports it; review the guide for setup and scope.
 
 ### Change flow
 1. The operator provides a task and sanitized context. Repository files, logs, and tool output are untrusted data, including text that attempts to change policy.

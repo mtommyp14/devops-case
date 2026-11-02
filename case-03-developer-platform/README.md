@@ -12,6 +12,8 @@ Menyediakan environment pengujian terisolasi untuk setiap pull request, mengguna
 ## Arsitektur Docker lab
 Template Compose membuat app, PostgreSQL, dan seed sintetis dalam project unik untuk nomor PR dan generasi. `envctl.py` memegang lock per PR, memeriksa readiness serta isi sintetis, lalu melaporkan URL localhost dan masa berlaku. Environment menggunakan network, volume, kredensial dummy, dan port sendiri. Tidak ada integrasi GitHub atau preview publik.
 
+Jalur Kubernetes opsional tersedia di [`kubernetes/`](kubernetes/) dan [panduan deployment](docs/kubernetes.md). Contoh ini menyediakan satu namespace preview PR/generasi; cleanup namespace berbasis TTL otomatis memerlukan controller eksternal.
+
 ## Siklus hidup environment
 1. PR dibuka atau diperbarui: validasi sumber, jalankan lint/test dan pemeriksaan image, lalu build image dengan digest yang dicatat.
 2. Buat project Compose untuk commit tersebut dengan CPU/memory limit dan kuota jumlah environment.
@@ -49,6 +51,8 @@ Provide an isolated test environment for each pull request, with synthetic data,
 
 ### Docker lab architecture
 The Compose template creates an app, PostgreSQL, and synthetic seed data in a unique project for each PR and generation. `envctl.py` uses a per-PR lock, checks readiness and the synthetic records, then reports a localhost URL and expiry time. Each environment has its own network, volume, dummy credentials, and port. There is no GitHub integration or public preview.
+
+An optional Kubernetes example is available under [`kubernetes/`](kubernetes/) with a [deployment guide](docs/kubernetes.md). It provisions one PR/generation namespace; automatic TTL-based namespace cleanup requires an external controller.
 
 ### Environment lifecycle
 1. When a PR opens or updates, validate its source, run lint/tests and image checks, then build an image with a recorded digest.

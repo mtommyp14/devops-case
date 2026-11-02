@@ -35,10 +35,14 @@ Kode producer/worker/replay, Compose, skema PostgreSQL, fixture sintetis, export
 ## Status
 Implementasi Docker lokal sudah dijalankan. Reproduksi menemukan 3 event tidak terhitung dari 20; jalur hardened mengarantina ketiganya dan memulihkan sink menjadi 20/20 tanpa duplikasi. Hasil dan batas pengujian dicatat di [test evidence](docs/test-evidence.md).
 
+Jalur Kubernetes opsional tersedia di [`kubernetes/`](kubernetes/) dengan [panduan apply dan skenario](docs/kubernetes.md). Contohnya memakai broker Kafka tunggal dan namespace lokal.
+
 
 <a id="english"></a>
 
 ## English
+
+An optional Kubernetes deployment is available under [`kubernetes/`](kubernetes/) with an [apply and scenario guide](docs/kubernetes.md). It uses one Kafka broker in a local learning namespace.
 
 ### Purpose
 Demonstrate a pipeline that appears healthy while losing events after a schema change, then detect, quarantine, and recover those events without duplicates.

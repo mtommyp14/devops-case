@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: case-01-broken-worker
+  namespace: case-01
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 300
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: case-01-broken-worker
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: worker
+          image: case-01-lab:local
+          imagePullPolicy: IfNotPresent
+          args: ["worker", "--mode", "broken", "--run-id", "broken", "--group-id", "broken-v1", "--once", "--count", "20"]
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka:9092
+            - name: SOURCE_TOPIC
+              value: consent-events
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: case-01-demo-secrets
+                  key: postgres-password
+            - name: DATABASE_URL
+              value: postgresql://lab:$(POSTGRES_PASSWORD)@postgres:5432/consent_lab
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi

@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: case-01-report-broken
+  namespace: case-01
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 120
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: case-01-report
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: report
+          image: case-01-lab:local
+          imagePullPolicy: IfNotPresent
+          args: ["report", "--run-id", "broken"]
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: case-01-demo-secrets
+                  key: postgres-password
+            - name: DATABASE_URL
+              value: postgresql://lab:$(POSTGRES_PASSWORD)@postgres:5432/consent_lab
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: case-01-report-hardened
+  namespace: case-01
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 120
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: case-01-report
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: report
+          image: case-01-lab:local
+          imagePullPolicy: IfNotPresent
+          args: ["report", "--run-id", "hardened"]
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: case-01-demo-secrets
+                  key: postgres-password
+            - name: DATABASE_URL
+              value: postgresql://lab:$(POSTGRES_PASSWORD)@postgres:5432/consent_lab

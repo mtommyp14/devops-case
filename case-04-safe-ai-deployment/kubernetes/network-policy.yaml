@@ -1,0 +1,77 @@
+# Requires a CNI plugin that enforces Kubernetes NetworkPolicy.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: agent-isolated
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/role: agent
+  policyTypes: [Ingress, Egress]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: controller-egress-allowlist
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/role: controller
+  policyTypes: [Ingress, Egress]
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: opa
+      ports:
+        - {protocol: TCP, port: 8181}
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: target
+      ports:
+        - {protocol: TCP, port: 8080}
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - {protocol: UDP, port: 53}
+        - {protocol: TCP, port: 53}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: opa-ingress-from-controller
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: opa
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/role: controller
+      ports:
+        - {protocol: TCP, port: 8181}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: target-ingress-from-controller
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: target
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/role: controller
+      ports:
+        - {protocol: TCP, port: 8080}
