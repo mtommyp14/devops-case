@@ -2,279 +2,188 @@
 
 # DevOps Practice Labs
 
-**Four hands-on scenarios. One local Docker workspace.**
+**Four Docker-based study cases for reliability, delivery, and operations.**
 
-Practice data recovery, incident response, pull request environments, and safer deployments with reproducible labs you can run and reset on your own machine.
+Reproducible local environments with synthetic data. Run a case, observe its behavior, and reset it when you are done.
 
-[English](#english) · [Bahasa Indonesia](#bahasa-indonesia) · [Quick start](#quick-start)
+[English](#english) · [Bahasa Indonesia](#bahasa-indonesia) · [Study cases](#study-cases) · [Quick start](#quick-start)
 
 </div>
 
 <a id="english"></a>
 
-Four local, Docker-based labs for practicing data reliability, incident recovery, developer environments, and policy-controlled deployment. Sample records and credentials are synthetic. These labs create no cloud resources and are not production deployments.
+## About these labs
 
-**Looking up a DevOps tool?** Use the [DevOps Tools Reference](case-00-devops-foundations/README.md) for tool categories, workspace status, and official documentation links alongside the hands-on study cases.
+This repository contains four hands-on DevOps study cases. Each case focuses on an operational problem and includes a runnable Docker Compose lab, implementation files, diagrams, and supporting documentation. The labs run locally and create no cloud resources. They are learning environments, not production deployments.
 
-**Choose your setup:** Docker Compose runs all four cases. Kubernetes manifests are available as an optional learning track for Case 02. [Follow the setup paths](docs/learning-paths.md) · [Learn how to use AI safely](docs/learning-with-ai.md).
+**Looking for tool references?** The [DevOps Tools Reference](case-00-devops-foundations/README.md) maps common tools to their roles, shows which ones are present here, and links to official usage documentation.
 
-## Explore the cases
+**Choose a setup path:** Use [Docker Compose](docs/learning-paths.md) for the local labs. Case 02 also has optional [Kubernetes manifests](case-02-incident-recovery/docs/kubernetes.md). If you use an AI assistant, follow [Learning with AI](docs/learning-with-ai.md).
+
+## Study cases
 
 <table>
   <tr>
     <td align="center" width="50%">
-      <a href="case-01-silent-data-loss/docs/build-and-run.md"><img src="case-01-silent-data-loss/docs/case-01-flow.svg" width="100%" alt="Case 01 flow: detect schema drift, quarantine invalid events, and replay them safely"></a>
-      <br><strong>01 · Silent data loss</strong><br>Detect schema drift, quarantine invalid events, reconcile IDs, and replay safely.<br><sub>ID: Deteksi schema drift, karantina event, cocokkan ID, lalu replay dengan aman.</sub>
+      <a href="case-01-silent-data-loss/docs/build-and-run.md"><img src="case-01-silent-data-loss/docs/case-01-flow.svg" width="100%" alt="Case 01: detect schema drift, quarantine invalid events, and replay them safely"></a>
+      <br><strong>01 · Silent data loss</strong><br>
+      Detect schema drift, quarantine invalid events, reconcile IDs, and replay safely.<br>
+      <sub>Stack: Kafka · PostgreSQL · Python · Prometheus</sub><br>
+      <sub><a href="case-01-silent-data-loss/docs/build-and-run.md">Build and run</a> · <a href="case-01-silent-data-loss/docs/test-evidence.md">Test evidence</a></sub>
     </td>
     <td align="center" width="50%">
-      <a href="case-02-incident-recovery/docs/build-and-run.md"><img src="case-02-incident-recovery/docs/case-02-flow.svg" width="100%" alt="Case 02 flow: compare stable and canary, gate promotion, and recover from regressions"></a>
-      <br><strong>02 · Incident recovery</strong><br>Investigate latency and errors, gate a canary, roll back, and shed load.<br><sub>ID: Investigasi latensi dan error, tahan canary dengan gate, rollback, dan batasi beban.</sub>
+      <a href="case-02-incident-recovery/docs/build-and-run.md"><img src="case-02-incident-recovery/docs/case-02-flow.svg" width="100%" alt="Case 02: investigate a canary regression, gate promotion, and recover"></a>
+      <br><strong>02 · Incident recovery</strong><br>
+      Investigate latency and errors, gate a canary, roll back, and shed load.<br>
+      <sub>Stack: Python · PostgreSQL · Prometheus · k6</sub><br>
+      <sub><a href="case-02-incident-recovery/docs/build-and-run.md">Build and run</a> · <a href="case-02-incident-recovery/docs/test-evidence.md">Load-test evidence</a> · <a href="case-02-incident-recovery/docs/kubernetes.md">Kubernetes path</a></sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="50%">
-      <a href="case-03-developer-platform/docs/build-and-run.md"><img src="case-03-developer-platform/docs/case-03-flow.svg" width="100%" alt="Case 03 flow: provision isolated pull request environments, verify them, and clean them up"></a>
-      <br><strong>03 · Developer platform</strong><br>Provision isolated pull request previews with synthetic data and scoped cleanup.<br><sub>ID: Buat preview pull request terisolasi dengan data sintetis dan cleanup terbatas.</sub>
+      <a href="case-03-developer-platform/docs/build-and-run.md"><img src="case-03-developer-platform/docs/case-03-flow.svg" width="100%" alt="Case 03: create isolated pull request environments and clean them up safely"></a>
+      <br><strong>03 · Developer platform</strong><br>
+      Provision isolated pull request previews with synthetic data and scoped cleanup.<br>
+      <sub>Stack: Python · Docker Compose · PostgreSQL</sub><br>
+      <sub><a href="case-03-developer-platform/docs/build-and-run.md">Build and run</a> · <a href="case-03-developer-platform/docs/test-evidence.md">Isolation and cleanup evidence</a></sub>
     </td>
     <td align="center" width="50%">
-      <a href="case-04-safe-ai-deployment/docs/build-and-run.md"><img src="case-04-safe-ai-deployment/docs/case-04-flow.svg" width="100%" alt="Case 04 flow: sandbox a proposal, check policy, require approval, and verify deployment"></a>
-      <br><strong>04 · Safe AI deployment</strong><br>Sandbox proposed changes, enforce policy, limit secrets, and approve risky actions.<br><sub>ID: Sandbox perubahan, terapkan policy, batasi secret, dan setujui tindakan berisiko.</sub>
+      <a href="case-04-safe-ai-deployment/docs/build-and-run.md"><img src="case-04-safe-ai-deployment/docs/case-04-flow.svg" width="100%" alt="Case 04: sandbox proposed deployment changes and enforce policy and approval gates"></a>
+      <br><strong>04 · Safe AI deployment</strong><br>
+      Sandbox proposed changes, enforce policy, limit secrets, and gate risky actions.<br>
+      <sub>Stack: Docker Compose · OPA · Python</sub><br>
+      <sub><a href="case-04-safe-ai-deployment/docs/build-and-run.md">Build and run</a> · <a href="case-04-safe-ai-deployment/docs/test-evidence.md">Policy and rollback evidence</a></sub>
     </td>
   </tr>
 </table>
 
-<div align="center"><sub>Choose a diagram to open its case guide. / Pilih diagram untuk membuka panduan case.</sub></div>
-
-## Labs
-
-| Lab | Scenario | Main components | Guide |
-|---|---|---|---|
-| 01 — Silent data loss | Find schema drift, quarantine invalid events, reconcile IDs, and replay safely | Kafka, PostgreSQL, Python, Prometheus | [Case 01 guide](case-01-silent-data-loss/docs/build-and-run.md) |
-| 02 — Incident recovery | Detect a canary regression, gate promotion, roll back, and shed load | Python services, PostgreSQL, Prometheus, k6 | [Case 02 guide](case-02-incident-recovery/docs/build-and-run.md) |
-| 03 — Developer platform | Provision isolated pull-request previews with synthetic data and scoped cleanup | Python, Docker Compose, PostgreSQL | [Case 03 guide](case-03-developer-platform/docs/build-and-run.md) |
-| 04 — Safe AI deployment | Evaluate deterministic change proposals in a sandbox with policy checks and approval gates | Docker Compose, OPA, Python | [Case 04 guide](case-04-safe-ai-deployment/docs/build-and-run.md) |
-
-Each case folder includes its own README, architecture or flow diagram, and build/run instructions. See the [Case 03 isolation/cleanup evidence](case-03-developer-platform/docs/test-evidence.md) and [Case 04 approval/rollback/sandbox evidence](case-04-safe-ai-deployment/docs/test-evidence.md). Case 04 uses fixed proposal fixtures; it does not call an AI model.
-
-Want a guided setup? Choose between [Docker Compose or Kubernetes](docs/learning-paths.md). If you use an AI assistant while learning, read [Learning with AI](docs/learning-with-ai.md) first.
-
-## Why Docker?
-
-- **Low-cost practice:** the labs run on your own machine and create no cloud resources or cloud bill. Docker still uses local CPU, memory, disk, electricity, and bandwidth when it downloads images.
-- **Separated from host projects:** each case runs in its own Compose project with its own containers, network, and named volumes. Dependencies such as Kafka and PostgreSQL do not need to be installed globally, and cleanup targets the lab's resources.
-- **Repeatable setup:** Compose files pin services and configuration so another learner can reproduce the same lab without manually assembling each dependency.
-- **Disposable data:** the cases use synthetic records and dummy credentials. You can remove their containers and lab volumes with the documented cleanup commands.
-
-Docker provides useful process and network separation, but containers still share the host kernel. Treat these labs as local development environments, not as a security boundary for hostile code or as production infrastructure.
-
-## Requirements
-
-- Docker Desktop or Docker Engine with the Docker Compose plugin.
-- Python 3 for host-side control commands in Cases 02 and 03.
-- Internet access the first time images are pulled.
-
-Start Docker before launching a lab. Run commands from the corresponding case directory so Compose uses the correct project and scoped cleanup settings.
+Case 04 uses fixed proposal fixtures to demonstrate guarded deployment; it does not call an AI model. The cases use synthetic records and disposable demo credentials.
 
 ## Quick start
 
-### Case 01 — Silent data loss
+### Requirements
 
-```sh
-cd case-01-silent-data-loss
-docker compose config
-docker compose up -d --build
-docker compose run --rm lab seed --count 20
-```
+- Docker Desktop or Docker Engine with the Docker Compose plugin.
+- Python 3 for the host-side control commands in Cases 02 and 03.
+- Internet access to download container images on the first run.
 
-Continue with the [Case 01 guide](case-01-silent-data-loss/docs/build-and-run.md) to reproduce the loss, enable quarantine, and replay events.
+Start Docker first, then run commands from the relevant case directory. Validate a Compose configuration with `docker compose config` before starting it.
 
-### Case 02 — Incident recovery
+| Case | Start the lab | Full guide |
+| --- | --- | --- |
+| 01 · Silent data loss | `cd case-01-silent-data-loss` then `docker compose up -d --build` | [Build and run](case-01-silent-data-loss/docs/build-and-run.md) |
+| 02 · Incident recovery | `cd case-02-incident-recovery` then `docker compose up -d --build` | [Build and run](case-02-incident-recovery/docs/build-and-run.md) |
+| 03 · Developer platform | `cd case-03-developer-platform` then `python3 envctl.py provision --pr 42 --generation 1 --port 18421` | [Build and run](case-03-developer-platform/docs/build-and-run.md) |
+| 04 · Safe AI deployment | `cd case-04-safe-ai-deployment` then `docker compose up -d --build volume-init opa target` | [Build and run](case-04-safe-ai-deployment/docs/build-and-run.md) |
 
-```sh
-cd case-02-incident-recovery
-docker compose config
-docker compose up -d --build
-python3 labctl.py status
-```
+Case 01 needs an additional seed command and the other cases have scenario-specific steps. Follow each guide for the complete sequence, expected behavior, service URLs, and troubleshooting.
 
-The router starts with 5% canary traffic. The [Case 02 guide](case-02-incident-recovery/docs/build-and-run.md) covers load generation, promotion gates, rollback, and load shedding.
+## Why Docker?
 
-### Case 03 — Developer platform
+- **No cloud bill for these labs:** the Compose stacks create local containers and networks, not cloud resources. Docker still uses local CPU, memory, disk, electricity, and bandwidth to download images and run services.
+- **Separate lab dependencies:** each case runs as its own Compose project. Databases and brokers do not need to be installed globally, and the documented cleanup targets the lab project.
+- **Repeatable setup:** Compose files declare services and configuration so the environment can be rebuilt consistently.
+- **Disposable practice data:** synthetic records and demo credentials can be removed with the lab's cleanup instructions.
 
-```sh
-cd case-03-developer-platform
-docker compose config
-python3 envctl.py provision --pr 42 --generation 1 --port 18421
-```
+Containers share the host kernel. These labs provide useful local separation, but are not a security boundary for hostile code or a substitute for production infrastructure.
 
-The command builds and checks a local preview at `http://127.0.0.1:18421`. See the [Case 03 guide](case-03-developer-platform/docs/build-and-run.md) for updating and cleaning up environments.
+## Results and cleanup
 
-### Case 04 — Safe AI deployment
+Evidence and limitations are documented with each case. Start with the [Case 02 load-test results](case-02-incident-recovery/docs/test-evidence.md), [Case 03 isolation and cleanup results](case-03-developer-platform/docs/test-evidence.md), or [Case 04 policy, approval, and rollback results](case-04-safe-ai-deployment/docs/test-evidence.md).
 
-```sh
-cd case-04-safe-ai-deployment
-docker compose config
-docker compose up -d --build volume-init opa target
-```
-
-Run a proposal scenario using the [Case 04 guide](case-04-safe-ai-deployment/docs/build-and-run.md). The target is available at `http://127.0.0.1:18084`.
-
-## Local endpoints
-
-Services bind to loopback where they publish host ports.
-
-| Case | Endpoint | Purpose |
-|---|---|---|
-| 01 | `localhost:9092` | Kafka |
-| 01 | `localhost:5432` | PostgreSQL |
-| 01 | `localhost:9090` | Prometheus |
-| 01 | `localhost:8001/metrics` | Metrics exporter |
-| 02 | `localhost:8082` | Router API and health |
-| 02 | `localhost:9093` | Prometheus |
-| 03 | `127.0.0.1:18421` | Example preview; choose another free port for parallel previews |
-| 04 | `127.0.0.1:18084` | Mock deployment target |
-
-Cases 01 and 02 use separate ports for Kafka and Prometheus so both Compose projects can run at once.
-
-## Stop and clean up
-
-For Cases 01, 02, and 04, run this from that case directory to stop its containers and remove its synthetic named volumes:
+For Cases 01, 02, and 04, run this from the case directory to stop containers and remove that lab's named volumes:
 
 ```sh
 docker compose down --volumes --remove-orphans
 ```
 
-For Case 03, use the environment manager so it removes only the selected preview:
+For Case 03, use its environment manager so cleanup targets the requested preview:
 
 ```sh
 python3 envctl.py cleanup --pr 42
 ```
 
-These cleanup commands delete lab data. Each case guide lists its ports, resource needs, persistence behavior, and limitations.
+These commands remove lab data. Check the case guide for persistence behavior and cleanup scope before running them.
 
 ## License
 
-The original code and documentation in this repository are licensed under the [MIT License](LICENSE). Third-party tools and images remain subject to their own licenses and terms.
+Original code and documentation in this repository are licensed under the [MIT License](LICENSE). Third-party tools and container images remain subject to their own licenses and terms.
 
 <a id="bahasa-indonesia"></a>
 
 ## Bahasa Indonesia
 
-# Laboratorium Praktik DevOps
+# DevOps Practice Labs
 
-Empat lab lokal berbasis Docker untuk mempraktikkan keandalan data, pemulihan insiden, environment developer, dan deployment dengan kontrol policy. Semua record contoh dan kredensial merupakan placeholder sintetis. Lab ini tidak membuat resource cloud dan bukan deployment produksi.
+**Empat study case berbasis Docker untuk keandalan, delivery, dan operasi.**
 
-**Mencari referensi tools DevOps?** Gunakan [Referensi Tools DevOps](case-00-devops-foundations/README.md) untuk melihat kategori, status penggunaan di workspace, dan tautan dokumentasi resmi pendamping study case.
+Environment lokal yang dapat diulang dengan data sintetis. Jalankan satu case, amati perilakunya, lalu bersihkan setelah selesai.
 
-**Pilih setup:** Docker Compose dapat menjalankan keempat case. Manifest Kubernetes tersedia sebagai jalur belajar opsional untuk Case 02. [Ikuti panduan setup](docs/learning-paths.md) · [Pelajari cara memakai AI dengan aman](docs/learning-with-ai.md).
+## Tentang lab ini
 
-## Lab
+Repository ini berisi empat study case praktik DevOps. Setiap case membahas masalah operasional dan menyediakan lab Docker Compose, file implementasi, diagram, serta dokumentasi pendukung yang dapat dijalankan. Lab berjalan secara lokal dan tidak membuat resource cloud. Ini adalah environment belajar, bukan deployment produksi.
 
-| Lab | Skenario | Komponen utama | Panduan |
-|---|---|---|---|
-| 01 — Kehilangan data senyap | Menemukan schema drift, mengarantina event tidak valid, merekonsiliasi ID, dan melakukan replay dengan aman | Kafka, PostgreSQL, Python, Prometheus | [Panduan Case 01](case-01-silent-data-loss/docs/build-and-run.md) |
-| 02 — Pemulihan insiden | Mendeteksi regresi canary, menahan promosi dengan gate, melakukan rollback, dan membatasi beban | Layanan Python, PostgreSQL, Prometheus, k6 | [Panduan Case 02](case-02-incident-recovery/docs/build-and-run.md) |
-| 03 — Platform developer | Menyediakan preview terisolasi untuk pull request dengan data sintetis dan cleanup terbatas | Python, Docker Compose, PostgreSQL | [Panduan Case 03](case-03-developer-platform/docs/build-and-run.md) |
-| 04 — Deployment AI yang aman | Mengevaluasi proposal perubahan deterministik di sandbox dengan pemeriksaan policy dan gate persetujuan | Docker Compose, OPA, Python | [Panduan Case 04](case-04-safe-ai-deployment/docs/build-and-run.md) |
+**Mencari referensi tools?** [Referensi Tools DevOps](case-00-devops-foundations/README.md) memetakan fungsi kategori tools, menunjukkan mana yang tersedia di sini, dan menyediakan tautan dokumentasi penggunaan resmi.
 
-Setiap folder case berisi README, diagram arsitektur atau alur, dan instruksi build/run. Lihat [bukti isolasi/cleanup Case 03](case-03-developer-platform/docs/test-evidence.md) dan [bukti approval/rollback/sandbox Case 04](case-04-safe-ai-deployment/docs/test-evidence.md). Case 04 menggunakan fixture proposal tetap; tidak memanggil model AI.
+**Pilih jalur setup:** Gunakan [Docker Compose](docs/learning-paths.md) untuk menjalankan lab lokal. Case 02 juga menyediakan [manifest Kubernetes opsional](case-02-incident-recovery/docs/kubernetes.md). Jika menggunakan asisten AI, ikuti panduan [Belajar dengan AI](docs/learning-with-ai.md).
 
-Butuh panduan setup? Pilih [Docker Compose atau Kubernetes](docs/learning-paths.md). Jika belajar dengan asisten AI, baca [Belajar dengan AI](docs/learning-with-ai.md) terlebih dahulu.
+## Daftar study case
 
-## Mengapa Docker?
+| Case | Skenario dan komponen | Panduan |
+| --- | --- | --- |
+| 01 · Kehilangan data senyap | Deteksi schema drift, karantina event tidak valid, rekonsiliasi ID, dan replay dengan aman. **Stack:** Kafka · PostgreSQL · Python · Prometheus | [Build dan jalankan](case-01-silent-data-loss/docs/build-and-run.md) · [Bukti test](case-01-silent-data-loss/docs/test-evidence.md) |
+| 02 · Pemulihan insiden | Investigasi latensi/error, gate canary, rollback, dan load shedding. **Stack:** Python · PostgreSQL · Prometheus · k6 | [Build dan jalankan](case-02-incident-recovery/docs/build-and-run.md) · [Bukti load test](case-02-incident-recovery/docs/test-evidence.md) · [Jalur Kubernetes](case-02-incident-recovery/docs/kubernetes.md) |
+| 03 · Platform developer | Preview pull request terisolasi dengan data sintetis dan cleanup terbatas. **Stack:** Python · Docker Compose · PostgreSQL | [Build dan jalankan](case-03-developer-platform/docs/build-and-run.md) · [Bukti isolasi dan cleanup](case-03-developer-platform/docs/test-evidence.md) |
+| 04 · Deployment AI yang aman | Sandbox proposal perubahan dengan pemeriksaan policy dan gate approval. **Stack:** Docker Compose · OPA · Python | [Build dan jalankan](case-04-safe-ai-deployment/docs/build-and-run.md) · [Bukti policy dan rollback](case-04-safe-ai-deployment/docs/test-evidence.md) |
 
-- **Latihan berbiaya rendah:** lab berjalan di komputer sendiri dan tidak membuat resource atau tagihan cloud. Docker tetap memakai CPU, memori, penyimpanan, listrik, dan bandwidth lokal saat mengunduh image.
-- **Terpisah dari project di host:** setiap case berjalan sebagai Compose project sendiri dengan container, network, dan named volume masing-masing. Dependency seperti Kafka dan PostgreSQL tidak perlu dipasang global; cleanup dibatasi pada resource lab.
-- **Setup yang dapat diulang:** file Compose menentukan service dan konfigurasinya sehingga orang lain dapat menjalankan lab yang sama tanpa merakit dependency secara manual.
-- **Data yang mudah dibuang:** semua case memakai record sintetis dan kredensial dummy. Container dan volume lab dapat dihapus dengan perintah cleanup yang didokumentasikan.
-
-Docker memberi pemisahan proses dan network yang berguna, tetapi container tetap berbagi kernel host. Anggap lab ini sebagai environment development lokal, bukan batas keamanan untuk kode berbahaya atau infrastruktur produksi.
-
-## Prasyarat
-
-- Docker Desktop atau Docker Engine dengan plugin Docker Compose.
-- Python 3 untuk perintah kontrol dari host pada Case 02 dan 03.
-- Akses internet saat pertama kali mengunduh image.
-
-Jalankan Docker sebelum memulai lab. Jalankan perintah dari folder case terkait agar Compose menggunakan project dan pengaturan cleanup yang benar.
+Case 04 menggunakan fixture proposal tetap untuk mendemonstrasikan deployment dengan guardrail; case ini tidak memanggil model AI. Semua record dan kredensial demo bersifat sintetis atau sementara.
 
 ## Mulai cepat
 
-### Case 01 — Kehilangan data senyap
+### Prasyarat
 
-```sh
-cd case-01-silent-data-loss
-docker compose config
-docker compose up -d --build
-docker compose run --rm lab seed --count 20
-```
+- Docker Desktop atau Docker Engine dengan plugin Docker Compose.
+- Python 3 untuk perintah kontrol dari host pada Case 02 dan 03.
+- Akses internet untuk mengunduh image container saat pertama kali dijalankan.
 
-Lanjutkan dengan [panduan Case 01](case-01-silent-data-loss/docs/build-and-run.md) untuk mereproduksi kehilangan data, mengaktifkan karantina, dan melakukan replay event.
+Jalankan Docker terlebih dahulu, lalu jalankan perintah dari direktori case yang sesuai. Periksa konfigurasi dengan `docker compose config` sebelum memulai service.
 
-### Case 02 — Pemulihan insiden
+| Case | Mulai lab | Panduan lengkap |
+| --- | --- | --- |
+| 01 · Kehilangan data senyap | `cd case-01-silent-data-loss` lalu `docker compose up -d --build` | [Build dan jalankan](case-01-silent-data-loss/docs/build-and-run.md) |
+| 02 · Pemulihan insiden | `cd case-02-incident-recovery` lalu `docker compose up -d --build` | [Build dan jalankan](case-02-incident-recovery/docs/build-and-run.md) |
+| 03 · Platform developer | `cd case-03-developer-platform` lalu `python3 envctl.py provision --pr 42 --generation 1 --port 18421` | [Build dan jalankan](case-03-developer-platform/docs/build-and-run.md) |
+| 04 · Deployment AI yang aman | `cd case-04-safe-ai-deployment` lalu `docker compose up -d --build volume-init opa target` | [Build dan jalankan](case-04-safe-ai-deployment/docs/build-and-run.md) |
 
-```sh
-cd case-02-incident-recovery
-docker compose config
-docker compose up -d --build
-python3 labctl.py status
-```
+Case 01 memerlukan perintah seed tambahan; case lainnya juga punya langkah skenario khusus. Ikuti panduan masing-masing untuk urutan lengkap, hasil yang diharapkan, URL service, dan troubleshooting.
 
-Router memulai dengan traffic canary 5%. [Panduan Case 02](case-02-incident-recovery/docs/build-and-run.md) menjelaskan pembuatan beban, gate promosi, rollback, dan load shedding.
+## Mengapa Docker?
 
-### Case 03 — Platform developer
+- **Tidak ada tagihan cloud untuk lab ini:** Compose membuat container dan network lokal, bukan resource cloud. Docker tetap menggunakan CPU, memori, penyimpanan, listrik, dan bandwidth lokal untuk mengunduh image dan menjalankan service.
+- **Dependency lab terpisah:** tiap case berjalan sebagai Compose project sendiri. Database dan message broker tidak perlu dipasang global, dan perintah cleanup dibatasi pada project lab.
+- **Setup konsisten:** file Compose mendeklarasikan service dan konfigurasi agar environment dapat dibangun ulang dengan cara yang sama.
+- **Data latihan mudah dibuang:** record sintetis dan kredensial demo dapat dihapus sesuai instruksi cleanup tiap lab.
 
-```sh
-cd case-03-developer-platform
-docker compose config
-python3 envctl.py provision --pr 42 --generation 1 --port 18421
-```
+Container berbagi kernel host. Lab ini memberi pemisahan lokal yang berguna, tetapi bukan batas keamanan untuk kode berbahaya atau pengganti infrastruktur produksi.
 
-Perintah tersebut membangun dan memeriksa preview lokal di `http://127.0.0.1:18421`. Lihat [panduan Case 03](case-03-developer-platform/docs/build-and-run.md) untuk pembaruan dan cleanup environment.
+## Hasil dan cleanup
 
-### Case 04 — Deployment AI yang aman
+Bukti dan batasan dicatat di masing-masing case. Lihat [hasil load test Case 02](case-02-incident-recovery/docs/test-evidence.md), [hasil isolasi dan cleanup Case 03](case-03-developer-platform/docs/test-evidence.md), atau [hasil policy, approval, dan rollback Case 04](case-04-safe-ai-deployment/docs/test-evidence.md).
 
-```sh
-cd case-04-safe-ai-deployment
-docker compose config
-docker compose up -d --build volume-init opa target
-```
-
-Jalankan skenario proposal sesuai [panduan Case 04](case-04-safe-ai-deployment/docs/build-and-run.md). Target tersedia di `http://127.0.0.1:18084`.
-
-## Endpoint lokal
-
-Service mengikat port host ke loopback jika port host dipublikasikan.
-
-| Case | Endpoint | Fungsi |
-|---|---|---|
-| 01 | `localhost:9092` | Kafka |
-| 01 | `localhost:5432` | PostgreSQL |
-| 01 | `localhost:9090` | Prometheus |
-| 01 | `localhost:8001/metrics` | Metrics exporter |
-| 02 | `localhost:8082` | Router API dan health |
-| 02 | `localhost:9093` | Prometheus |
-| 03 | `127.0.0.1:18421` | Contoh preview; pilih port lokal lain untuk preview paralel |
-| 04 | `127.0.0.1:18084` | Target deployment mock |
-
-Case 01 dan 02 menggunakan port terpisah untuk Kafka dan Prometheus sehingga kedua project Compose dapat berjalan bersamaan.
-
-## Hentikan dan bersihkan
-
-Untuk Case 01, 02, dan 04, jalankan dari folder case untuk menghentikan container serta menghapus volume sintetis milik project tersebut:
+Untuk Case 01, 02, dan 04, jalankan perintah berikut dari direktori case untuk menghentikan container dan menghapus named volume lab tersebut:
 
 ```sh
 docker compose down --volumes --remove-orphans
 ```
 
-Untuk Case 03, gunakan environment manager agar hanya preview yang dipilih yang dihapus:
+Untuk Case 03, gunakan environment manager agar cleanup hanya menghapus preview yang dipilih:
 
 ```sh
 python3 envctl.py cleanup --pr 42
 ```
 
-Perintah cleanup ini menghapus data lab. Panduan tiap case menjelaskan port, kebutuhan resource, perilaku penyimpanan, dan batasannya.
+Perintah ini menghapus data lab. Periksa panduan case untuk memahami data persisten dan cakupan cleanup sebelum menjalankannya.
 
 ## Lisensi
 
-Kode dan dokumentasi asli dalam repo ini dilisensikan dengan [MIT License](LICENSE). Tool dan image pihak ketiga tetap mengikuti lisensi serta ketentuannya masing-masing.
+Kode dan dokumentasi asli dalam repository ini menggunakan [MIT License](LICENSE). Tool dan image container pihak ketiga tetap mengikuti lisensi serta ketentuannya masing-masing.
