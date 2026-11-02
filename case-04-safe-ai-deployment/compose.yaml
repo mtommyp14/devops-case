@@ -1,0 +1,93 @@
+services:
+  volume-init:
+    image: busybox:1.36
+    command: ["sh", "-c", "chown -R 10001:10001 /plans /audit"]
+    network_mode: none
+    volumes:
+      - plan-data:/plans
+      - audit-data:/audit
+
+  opa:
+    image: openpolicyagent/opa:1.0.0
+    command: ["run", "--server", "--addr=0.0.0.0:8181", "/policy/deployment.rego"]
+    volumes:
+      - ./policy:/policy:ro
+    healthcheck:
+      test: ["CMD", "opa", "eval", "true"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    mem_limit: 128m
+
+  target:
+    build: .
+    command: ["python", "target.py"]
+    environment:
+      DUMMY_DEPLOY_TOKEN: local-only-demo-token
+      FAIL_RELEASE: v2-bad
+    ports:
+      - "127.0.0.1:18084:8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    mem_limit: 128m
+
+  agent:
+    build: .
+    command: ["python", "agent.py"]
+    profiles: [tools]
+    environment:
+      SCENARIO: ${SCENARIO:-safe}
+      PLAN_FILE: /out/plan.json
+    volumes:
+      - plan-data:/out
+      - ./scenarios:/scenarios:ro
+    network_mode: none
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    user: "10001:10001"
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 128m
+    cpus: 0.5
+    pids_limit: 64
+    depends_on:
+      volume-init:
+        condition: service_completed_successfully
+
+  controller:
+    build: .
+    entrypoint: ["python", "controller.py"]
+    profiles: [tools]
+    environment:
+      PLAN_FILE: /plans/plan.json
+      AUDIT_FILE: /audit/events.jsonl
+      OPA_URL: http://opa:8181
+      TARGET_URL: http://target:8080
+      DUMMY_DEPLOY_TOKEN: local-only-demo-token
+    volumes:
+      - plan-data:/plans:ro
+      - audit-data:/audit
+    user: "10001:10001"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 160m
+    cpus: 0.5
+    pids_limit: 64
+    depends_on:
+      volume-init:
+        condition: service_completed_successfully
+      opa:
+        condition: service_healthy
+      target:
+        condition: service_healthy
+
+volumes:
+  plan-data:
+  audit-data:

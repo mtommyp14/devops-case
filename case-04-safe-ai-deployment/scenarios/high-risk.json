@@ -1,0 +1,10 @@
+{
+  "task_id": "demo-migration-change",
+  "target": "local-demo",
+  "image": "portfolio-demo:v2-migration@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "image_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "policy_change": false,
+  "change": {"migration": true, "delete_resource": false},
+  "security": {"privileged": false, "host_mounts": 0, "secret_scope": "none", "egress": false},
+  "deploy": {"release": "v2-migration"}
+}

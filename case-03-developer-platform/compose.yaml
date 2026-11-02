@@ -1,0 +1,69 @@
+services:
+  db:
+    image: postgres:17.2-alpine
+    environment:
+      POSTGRES_DB: preview
+      POSTGRES_USER: preview
+      POSTGRES_PASSWORD: ${PREVIEW_DB_PASSWORD:-preview-dummy-only}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U preview -d preview"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    labels:
+      portfolio.owner: case-03-developer-platform
+      portfolio.pr: ${PR_NUMBER:-0}
+      portfolio.generation: ${GENERATION:-0}
+      portfolio.ttl-managed-by: envctl-state
+    mem_limit: 256m
+
+  seed:
+    build: .
+    command: ["python", "seed.py"]
+    environment:
+      DATABASE_URL: postgresql://preview:${PREVIEW_DB_PASSWORD:-preview-dummy-only}@db:5432/preview
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      portfolio.owner: case-03-developer-platform
+      portfolio.pr: ${PR_NUMBER:-0}
+      portfolio.generation: ${GENERATION:-0}
+      portfolio.ttl-managed-by: envctl-state
+    mem_limit: 128m
+
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://preview:${PREVIEW_DB_PASSWORD:-preview-dummy-only}@db:5432/preview
+      PR_NUMBER: ${PR_NUMBER:-local}
+      GENERATION: ${GENERATION:-1}
+    ports:
+      - "127.0.0.1:${PREVIEW_PORT:-18030}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      seed:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    labels:
+      portfolio.owner: case-03-developer-platform
+      portfolio.pr: ${PR_NUMBER:-0}
+      portfolio.generation: ${GENERATION:-0}
+      portfolio.ttl-managed-by: envctl-state
+    mem_limit: 192m
+    cpus: 0.5
+
+volumes:
+  db-data:
+    labels:
+      portfolio.owner: case-03-developer-platform
+      portfolio.pr: ${PR_NUMBER:-0}
+      portfolio.generation: ${GENERATION:-0}
+      portfolio.ttl-managed-by: envctl-state

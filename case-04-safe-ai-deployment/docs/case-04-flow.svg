@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Safe AI deployment: sandbox, validate, approve, and verify</title>
+  <desc id="desc">An operator sends sanitized context to a restricted sandbox agent, which proposes a patch and plan without deployment secrets or host access. Independent validators and policy evaluation block unsafe changes. Low-risk changes can proceed after all gates pass; risky changes require approval bound to the exact artifact hash. A separate controller deploys and verifies the change, rolling back on failure.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-20%" width="130%" height="145%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#17263d" flood-opacity=".08"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#8593a6"/></marker>
+    <marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#16836f"/></marker>
+    <marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#d45c5b"/></marker>
+    <style>
+      text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#17263d}.eyebrow{font-size:12px;font-weight:750;letter-spacing:1.8px;fill:#68788e}.title{font-size:30px;font-weight:760;letter-spacing:-.35px}.sub{font-size:14px;fill:#68788e}
+      .section{font-size:13px;font-weight:780;letter-spacing:1px}.heading{font-size:15px;font-weight:740}.body{font-size:12px;fill:#66768b}.tiny{font-size:10px;fill:#75849a}.brand{font-size:10px;font-weight:800;letter-spacing:.3px}
+      .line{fill:none;stroke:#8593a6;stroke-width:2.2;marker-end:url(#arrow)}.gline{fill:none;stroke:#16836f;stroke-width:2.5;marker-end:url(#green)}.rline{fill:none;stroke:#d45c5b;stroke-width:2.5;marker-end:url(#red)}
+    </style>
+  </defs>
+  <rect width="1440" height="900" rx="22" fill="#f4f7fb"/><rect width="1440" height="122" rx="22" fill="#fff"/><path d="M0 122H1440" stroke="#e6ebf2"/>
+  <text x="48" y="35" class="eyebrow">DEVOPS PORTFOLIO  /  CASE 04</text><text x="48" y="76" class="title">Let AI propose changes; keep deployment under control</text><text x="50" y="102" class="sub">Restricted sandbox · independent policy checks · approval tied to the exact change</text>
+  <rect x="1183" y="38" width="208" height="42" rx="13" fill="#eaf4f1"/><circle cx="1203" cy="59" r="6" fill="#16836f"/><text x="1217" y="63" class="tiny" style="font-weight:750;fill:#286a5c">LOCAL DOCKER LAB</text>
+
+  <rect x="42" y="145" width="1356" height="400" rx="20" fill="#fff" stroke="#e0e7f0"/>
+  <text x="68" y="180" class="section">01  ·  PROPOSE AND VALIDATE OUTSIDE THE DEPLOYMENT CONTROLLER</text>
+  <rect x="70" y="260" width="190" height="120" rx="15" fill="#f5f8fd" stroke="#dce5f0"/><text x="90" y="294" class="brand" style="fill:#416b9c">OPERATOR</text><text x="90" y="327" class="heading">Task + context</text><text x="90" y="353" class="body">sanitized inputs</text>
+  <rect x="330" y="260" width="220" height="120" rx="15" fill="#f4f8ff" stroke="#cfddf0" filter="url(#shadow)"/><text x="350" y="294" class="brand" style="fill:#416b9c">RESTRICTED SANDBOX</text><text x="350" y="327" class="heading">Agent proposes patch</text><text x="350" y="353" class="body">non-root · no secrets · no socket</text><text x="350" y="371" class="tiny">read-only · limited network</text>
+  <rect x="620" y="260" width="230" height="120" rx="15" fill="#f5f8fd" stroke="#dce5f0"/><text x="640" y="294" class="brand" style="fill:#416b9c">INDEPENDENT VALIDATION</text><text x="640" y="327" class="heading">Test + scan + policy</text><text x="640" y="353" class="body">schema · secrets · image · OPA</text><text x="640" y="371" class="tiny" style="fill:#b34a48">any failure → stop (fail closed)</text>
+  <rect x="920" y="260" width="205" height="120" rx="15" fill="#fff" stroke="#dce5f0" filter="url(#shadow)"/><text x="940" y="294" class="brand" style="fill:#416b9c">RISK GATE</text><text x="940" y="327" class="heading">Classify change</text><text x="940" y="353" class="body">bind digest + target</text>
+  <rect x="1200" y="260" width="170" height="120" rx="15" fill="#eff9f6" stroke="#cde8df"/><text x="1220" y="294" class="brand" style="fill:#16765f">CONTROLLER</text><text x="1220" y="327" class="heading">Deploy approved</text><text x="1220" y="353" class="body">artifact only</text>
+  <path d="M260 320h70" class="line"/><path d="M550 320h70" class="line"/><path d="M850 320h70" class="line"/>
+
+
+  <rect x="42" y="590" width="1356" height="268" rx="20" fill="#17283e"/>
+  <text x="68" y="630" class="section" style="fill:#edf3fa">02  ·  APPLY ONLY A VERIFIED, AUTHORIZED CHANGE</text>
+  <rect x="70" y="680" width="250" height="112" rx="14" fill="#233951"/><text x="90" y="714" class="brand" style="fill:#b7c5d7">LOW RISK</text><text x="90" y="746" class="heading" style="fill:#f5f8fc">All gates pass</text><text x="90" y="772" class="tiny" style="fill:#b7c5d7">eligible for demo auto-apply</text>
+  <rect x="390" y="680" width="300" height="112" rx="14" fill="#233951"/><text x="410" y="714" class="brand" style="fill:#f1c879">RISKY CHANGE</text><text x="410" y="746" class="heading" style="fill:#f5f8fc">Human approval required</text><text x="410" y="772" class="tiny" style="fill:#b7c5d7">approval binds patch hash + target</text>
+  <rect x="760" y="680" width="260" height="112" rx="14" fill="#233951"/><text x="780" y="714" class="brand" style="fill:#b7c5d7">DEPLOYMENT CONTROLLER</text><text x="780" y="746" class="heading" style="fill:#f5f8fc">Apply pinned artifact</text><text x="780" y="772" class="tiny" style="fill:#b7c5d7">inject scoped short-lived dummy secret</text>
+  <rect x="1090" y="680" width="278" height="112" rx="14" fill="#233951"/><text x="1110" y="714" class="brand" style="fill:#b7c5d7">DOCKER DEMO + VERIFY</text><text x="1110" y="746" class="heading" style="fill:#f5f8fc">Health + smoke checks</text><text x="1110" y="772" class="tiny" style="fill:#b7c5d7">pass → record · fail → restore prior digest</text>
+  <path d="M1022 380v68h-482" fill="none" stroke="#8593a6" stroke-width="2.2"/>
+  <path d="M540 448H195V680" fill="none" stroke="#16836f" stroke-width="2.5" marker-end="url(#green)"/>
+  <path d="M540 448v232" fill="none" stroke="#8593a6" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <text x="210" y="436" class="tiny" style="fill:#16765f">low risk · gates pass</text><text x="552" y="436" class="tiny">risky · approval required</text>
+  <path d="M320 736h30v74h600v-18" fill="none" stroke="#16836f" stroke-width="2.5" marker-end="url(#green)"/>
+  <path d="M690 736h69" fill="none" stroke="#16836f" stroke-width="2.5" marker-end="url(#green)"/><path d="M1020 736h70" fill="none" stroke="#16836f" stroke-width="2.5" marker-end="url(#green)"/>
+  <path d="M1229 792v43h-179v-75h-30" fill="none" stroke="#d45c5b" stroke-width="2.5" marker-end="url(#red)"/><text x="1060" y="850" class="tiny" style="fill:#f1aaa6">verification fails → rollback</text>
+</svg>

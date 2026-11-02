@@ -1,0 +1,18 @@
+groups:
+  - name: consent-data-reliability
+    rules:
+      - alert: ConsentEventsUnaccounted
+        expr: consent_lab_unaccounted_events > 0
+        for: 15s
+        labels:
+          severity: critical
+        annotations:
+          summary: Consent source events have no durable sink or quarantine outcome
+          description: Reconcile source ledger IDs against sink and pending quarantine before replay.
+      - alert: ConsentQuarantinePending
+        expr: consent_lab_pending_quarantine_events > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: Consent events are waiting for schema review and recovery

@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Local evidence and secrets
+.env
+*.log
+.DS_Store
+
+# Local generated test output
+case-*/artifacts/local/

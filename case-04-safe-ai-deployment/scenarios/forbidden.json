@@ -1,0 +1,10 @@
+{
+  "task_id": "demo-forbidden-privileged",
+  "target": "local-demo",
+  "image": "portfolio-demo:forbidden@sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "image_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "policy_change": false,
+  "change": {"migration": false, "delete_resource": false},
+  "security": {"privileged": true, "host_mounts": 0, "secret_scope": "none", "egress": false},
+  "deploy": {"release": "v2-forbidden"}
+}

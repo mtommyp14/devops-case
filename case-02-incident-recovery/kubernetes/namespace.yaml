@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: case-02
+  labels:
+    app.kubernetes.io/part-of: devops-portfolio
+    app.kubernetes.io/name: incident-recovery-lab

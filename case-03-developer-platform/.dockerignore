@@ -1,0 +1,6 @@
+.git
+.lab-state
+.venv
+__pycache__
+*.py[cod]
+docs

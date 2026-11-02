@@ -1,0 +1,10 @@
+{
+  "task_id": "demo-health-failure",
+  "target": "local-demo",
+  "image": "portfolio-demo:bad-health@sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "image_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "policy_change": false,
+  "change": {"migration": false, "delete_resource": false},
+  "security": {"privileged": false, "host_mounts": 0, "secret_scope": "none", "egress": false},
+  "deploy": {"release": "v2-bad"}
+}

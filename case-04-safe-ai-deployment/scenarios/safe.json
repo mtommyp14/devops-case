@@ -1,0 +1,10 @@
+{
+  "task_id": "demo-safe-change",
+  "target": "local-demo",
+  "image": "portfolio-demo:v2@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "image_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "policy_change": false,
+  "change": {"migration": false, "delete_resource": false},
+  "security": {"privileged": false, "host_mounts": 0, "secret_scope": "none", "egress": false},
+  "deploy": {"release": "v2-safe"}
+}

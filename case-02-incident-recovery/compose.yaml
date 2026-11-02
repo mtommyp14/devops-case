@@ -1,0 +1,99 @@
+name: devops-portfolio-case-02
+services:
+  postgres:
+    image: postgres:17.2-alpine
+    environment:
+      POSTGRES_DB: incident_lab
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab-local-only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d incident_lab"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    mem_limit: 384m
+
+  stable:
+    build: .
+    environment:
+      APP_RELEASE: stable
+      APP_FAULT: none
+      DATABASE_URL: postgresql://lab:lab-local-only@postgres:5432/incident_lab
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    mem_limit: 192m
+    cpus: 0.75
+
+  canary:
+    build: .
+    environment:
+      APP_RELEASE: canary
+      APP_FAULT: ${CANARY_FAULT:-slow}
+      DATABASE_URL: postgresql://lab:lab-local-only@postgres:5432/incident_lab
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    mem_limit: 192m
+    cpus: 0.75
+
+  router:
+    build: .
+    command: ["uvicorn", "app.router:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      STABLE_URL: http://stable:8000
+      CANARY_URL: http://canary:8000
+      CANARY_PERCENT: ${CANARY_PERCENT:-5}
+      ADMIN_TOKEN: local-demo-token
+    ports:
+      - "127.0.0.1:8082:8000"
+    depends_on:
+      stable:
+        condition: service_healthy
+      canary:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    mem_limit: 192m
+
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus", "--storage.tsdb.retention.time=1d"]
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "127.0.0.1:9093:9090"
+    depends_on:
+      - router
+    mem_limit: 256m
+
+  k6:
+    image: grafana/k6:0.56.0
+    profiles: [load]
+    volumes:
+      - ./scripts:/scripts:ro
+    depends_on:
+      router:
+        condition: service_healthy
+    mem_limit: 256m
+
+volumes:
+  postgres-data:
+  prometheus-data:

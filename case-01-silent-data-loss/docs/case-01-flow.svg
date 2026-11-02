@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Consent event pipeline: silent loss and safe recovery</title>
+  <desc id="desc">A short flow diagram showing a producer, source ledger, and Kafka stream feeding a broken consumer and a hardened consumer. The broken path silently loses three of twenty events. The hardened path quarantines and replays them, while reconciliation feeds Prometheus alerts.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-20%" width="130%" height="145%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#17263d" flood-opacity=".08"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#8593a6"/></marker>
+    <marker id="red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#d45c5b"/></marker>
+    <marker id="green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#16836f"/></marker>
+    <style>
+      text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#17263d}
+      .eyebrow{font-size:12px;font-weight:750;letter-spacing:1.8px;fill:#68788e}
+      .title{font-size:30px;font-weight:760;letter-spacing:-.35px}
+      .sub{font-size:14px;fill:#68788e}
+      .section{font-size:13px;font-weight:780;letter-spacing:1px}
+      .heading{font-size:15px;font-weight:740}
+      .body{font-size:12px;fill:#66768b}
+      .tiny{font-size:10px;fill:#75849a}
+      .brand{font-size:11px;font-weight:800;letter-spacing:.3px}
+      .line{fill:none;stroke:#8593a6;stroke-width:2.2;marker-end:url(#arrow)}
+      .rline{fill:none;stroke:#d45c5b;stroke-width:2.5;marker-end:url(#red)}
+      .gline{fill:none;stroke:#16836f;stroke-width:2.5;marker-end:url(#green)}
+    </style>
+  </defs>
+
+  <rect width="1440" height="900" rx="22" fill="#f4f7fb"/>
+  <rect x="0" y="0" width="1440" height="122" rx="22" fill="#fff"/>
+  <path d="M0 122H1440" stroke="#e6ebf2"/>
+  <text x="48" y="35" class="eyebrow">DEVOPS PORTFOLIO  /  CASE 01</text>
+  <text x="48" y="76" class="title">A green check can still hide lost events</text>
+  <text x="50" y="102" class="sub">20 synthetic consent events · 17 use schema v1 · 3 use schema v2</text>
+  <rect x="1183" y="38" width="208" height="42" rx="13" fill="#eaf4f1"/>
+  <circle cx="1203" cy="59" r="6" fill="#16836f"/>
+  <text x="1217" y="63" class="tiny" style="font-weight:750;fill:#286a5c">LOCAL DOCKER LAB</text>
+
+  <!-- Shared event input -->
+  <rect x="42" y="145" width="290" height="535" rx="20" fill="#fff" stroke="#e0e7f0" filter="url(#shadow)"/>
+  <text x="66" y="180" class="section">01  ·  EVENT INPUT</text>
+  <text x="66" y="202" class="body">Write the source record, then publish.</text>
+
+  <rect x="68" y="232" width="238" height="100" rx="15" fill="#f5f8fd" stroke="#dce5f0"/>
+  <circle cx="96" cy="267" r="15" fill="#e3edf9"/>
+  <path d="M90 267h12m-5-5 5 5-5 5" fill="none" stroke="#4779bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="121" y="271" class="heading">Producer</text>
+  <text x="88" y="305" class="body">20 fabricated consent events</text>
+
+  <rect x="68" y="382" width="238" height="102" rx="15" fill="#f4f8ff" stroke="#cfddf0"/>
+  <rect x="88" y="398" width="32" height="22" rx="6" fill="#416b9c"/>
+  <text x="104" y="413" text-anchor="middle" class="brand" style="fill:#fff;font-size:9px">PG</text>
+  <text x="130" y="414" class="brand" style="fill:#416b9c">POSTGRESQL</text>
+  <text x="88" y="449" class="heading">Source ledger</text>
+  <text x="88" y="470" class="body">reference IDs + raw payload</text>
+
+  <rect x="68" y="532" width="238" height="112" rx="15" fill="#fff8f5" stroke="#efd9cf"/>
+  <rect x="88" y="548" width="32" height="22" rx="6" fill="#b8403d"/>
+  <text x="104" y="563" text-anchor="middle" class="brand" style="fill:#fff;font-size:9px">K</text>
+  <text x="130" y="564" class="brand" style="fill:#a6403b">APACHE KAFKA</text>
+  <text x="88" y="598" class="heading">consent-events</text>
+  <text x="88" y="620" class="body">offset = consumer progress</text>
+
+  <path d="M187 332v43" class="line"/>
+  <text x="198" y="360" class="tiny">record first</text>
+  <path d="M187 484v42" class="line"/>
+  <text x="198" y="512" class="tiny">publish</text>
+
+  <!-- Main lane backgrounds -->
+  <rect x="365" y="145" width="1033" height="245" rx="20" fill="#fff6f5" stroke="#f0d8d5"/>
+  <rect x="365" y="410" width="1033" height="270" rx="20" fill="#eff9f6" stroke="#cde8df"/>
+
+  <!-- The Kafka stream feeds both alternative worker paths. -->
+  <path d="M306 588H345V280H414" class="line"/>
+  <path d="M345 547H414" class="line"/>
+  <circle cx="345" cy="547" r="4" fill="#8593a6"/>
+
+  <!-- Broken lane -->
+  <rect x="389" y="165" width="94" height="23" rx="11" fill="#fde5e2"/>
+  <text x="436" y="181" text-anchor="middle" class="tiny" style="font-weight:800;letter-spacing:.7px;fill:#b34a48">INCIDENT</text>
+  <text x="496" y="182" class="section" style="fill:#743f43">02  ·  SILENT LOSS</text>
+
+  <rect x="415" y="220" width="232" height="120" rx="15" fill="#fff" stroke="#e8c5c1" filter="url(#shadow)"/>
+  <circle cx="443" cy="251" r="13" fill="#fde9e7"/>
+  <path d="M438 251h10m-5-5v10" stroke="#c65350" stroke-width="2" stroke-linecap="round"/>
+  <text x="465" y="256" class="heading">Broken consumer</text>
+  <text x="435" y="289" class="body">stays alive · skips consent_v2</text>
+  <text x="435" y="315" class="body" style="fill:#b34a48">commits offset anyway</text>
+
+  <rect x="795" y="220" width="212" height="120" rx="15" fill="#fff" stroke="#e8c5c1"/>
+  <rect x="815" y="238" width="32" height="22" rx="6" fill="#416b9c"/>
+  <text x="831" y="253" text-anchor="middle" class="brand" style="fill:#fff;font-size:9px">PG</text>
+  <text x="857" y="254" class="brand" style="fill:#416b9c">POSTGRESQL</text>
+  <text x="815" y="291" class="heading">Sink: 17 rows</text>
+  <text x="815" y="316" class="body">valid v1 events</text>
+
+  <rect x="1107" y="220" width="255" height="120" rx="15" fill="#fde9e7" stroke="#e8bdb8"/>
+  <circle cx="1137" cy="251" r="13" fill="#d45c5b"/>
+  <path d="m1132 246 10 10m0-10-10 10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+  <text x="1160" y="256" class="heading" style="fill:#9f403d">3 events skipped</text>
+  <text x="1127" y="291" class="body">health check stays green</text>
+  <text x="1127" y="316" class="body">reconciliation finds the gap</text>
+
+  <path d="M647 270h147" class="rline"/>
+  <text x="686" y="257" class="tiny" style="fill:#a64b48">17 valid</text>
+  <path d="M647 310h74v52h319v-82h66" class="rline"/>
+  <text x="842" y="380" class="tiny" style="fill:#a64b48">3 skipped · offset advances</text>
+
+  <!-- Hardened lane -->
+  <rect x="389" y="430" width="94" height="23" rx="11" fill="#d9f1e9"/>
+  <text x="436" y="446" text-anchor="middle" class="tiny" style="font-weight:800;letter-spacing:.7px;fill:#16765f">RECOVERY</text>
+  <text x="496" y="447" class="section" style="fill:#285c53">03  ·  VALIDATE AND REPLAY</text>
+
+  <rect x="415" y="485" width="232" height="125" rx="15" fill="#fff" stroke="#c8e2d9" filter="url(#shadow)"/>
+  <circle cx="443" cy="517" r="13" fill="#daf1e9"/>
+  <path d="m437 517 4 4 8-9" fill="none" stroke="#16836f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="465" y="522" class="heading">Hardened worker</text>
+  <text x="435" y="555" class="body">validates schema</text>
+  <text x="435" y="580" class="body">persists before offset commit</text>
+
+  <rect x="795" y="485" width="212" height="82" rx="14" fill="#fff" stroke="#c8e2d9"/>
+  <text x="815" y="518" class="heading">Sink · 17 valid</text>
+  <text x="815" y="543" class="body">same event IDs</text>
+
+  <rect x="795" y="585" width="212" height="74" rx="14" fill="#fff" stroke="#c8e2d9"/>
+  <text x="815" y="615" class="heading">Quarantine · 3</text>
+  <text x="815" y="639" class="body">payload + reason</text>
+
+  <rect x="1108" y="597" width="226" height="74" rx="14" fill="#ddf3eb" stroke="#a9d9c9"/>
+  <text x="1126" y="627" class="heading">Reviewed adapter</text>
+  <text x="1126" y="651" class="body">consent_v2 → consent</text>
+
+  <rect x="1080" y="485" width="282" height="82" rx="14" fill="#fff" stroke="#a9d9c9"/>
+  <text x="1100" y="518" class="heading">Sink after replay · 20</text>
+  <text x="1100" y="543" class="body">17 valid + 3 recovered</text>
+
+  <path d="M647 522h147" class="gline"/>
+  <text x="691" y="509" class="tiny" style="fill:#16765f">17 valid</text>
+  <path d="M647 570h86v52h61" class="gline"/>
+  <text x="670" y="558" class="tiny" style="fill:#16765f">3 unsupported</text>
+  <path d="M1007 622h100" class="gline"/>
+  <path d="M1221 597v-30" class="gline"/>
+
+  <!-- Reconciliation -->
+  <rect x="42" y="710" width="1356" height="148" rx="20" fill="#17283e"/>
+  <text x="68" y="744" class="section" style="fill:#edf3fa">04  ·  RECONCILE IDs, THEN ALERT</text>
+  <rect x="68" y="765" width="300" height="67" rx="12" fill="#233951"/>
+  <text x="86" y="792" class="heading" style="fill:#f5f8fc;font-size:13px">Source IDs vs sink + quarantine</text>
+  <text x="86" y="815" class="tiny" style="fill:#b7c5d7">broken: 3 missing  ·  hardened: 0</text>
+  <path d="M368 798h52" fill="none" stroke="#8297b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <rect x="432" y="765" width="350" height="67" rx="12" fill="#233951"/>
+  <text x="452" y="792" class="heading" style="fill:#f5f8fc;font-size:13px">Metrics exporter</text>
+  <text x="452" y="815" class="tiny" style="fill:#b7c5d7">gap · pending quarantine · source-to-sink lag</text>
+  <path d="M782 798h52" fill="none" stroke="#8297b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <rect x="846" y="765" width="518" height="67" rx="12" fill="#233951"/>
+  <circle cx="876" cy="798" r="14" fill="#e6522c"/>
+  <path d="m868 800 5-6 5 5 7-9" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="902" y="793" class="heading" style="fill:#f5f8fc;font-size:13px">Prometheus</text>
+  <text x="902" y="815" class="tiny" style="fill:#b7c5d7">alerts fire when events are unaccounted or quarantined</text>
+</svg>

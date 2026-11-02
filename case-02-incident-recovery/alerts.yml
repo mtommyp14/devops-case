@@ -1,0 +1,19 @@
+groups:
+  - name: canary-safety
+    rules:
+      - alert: CanaryErrorRateHigh
+        expr: sum(rate(portfolio_requests_total{release="canary",status=~"5..",outcome="served"}[1m])) / clamp_min(sum(rate(portfolio_requests_total{release="canary",outcome="served"}[1m])), 0.001) > 0.01
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Canary 5xx rate is above 1%
+          description: Stop promotion and compare canary with stable before rollback.
+      - alert: CanaryP95Regression
+        expr: histogram_quantile(0.95, sum by (le) (rate(portfolio_request_duration_seconds_bucket{release="canary"}[1m]))) > 1.2 * histogram_quantile(0.95, sum by (le) (rate(portfolio_request_duration_seconds_bucket{release="stable"}[1m])))
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: Canary p95 is more than 20% above stable
+          description: Compare traces, database latency, and application saturation.

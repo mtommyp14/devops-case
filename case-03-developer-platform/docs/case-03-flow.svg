@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Pull request environments: provision, verify, and clean up</title>
+  <desc id="desc">A pull request passes CI validation, creates a digest-pinned image and an isolated Docker Compose environment seeded with synthetic data. Readiness and smoke checks determine whether a preview is reported ready. Closing the pull request or reaching its TTL triggers scoped cleanup, with a sweeper for orphan resources.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-20%" width="130%" height="145%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#17263d" flood-opacity=".08"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#8593a6"/></marker>
+    <marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#16836f"/></marker>
+    <marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#d45c5b"/></marker>
+    <style>
+      text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#17263d}.eyebrow{font-size:12px;font-weight:750;letter-spacing:1.8px;fill:#68788e}.title{font-size:30px;font-weight:760;letter-spacing:-.35px}.sub{font-size:14px;fill:#68788e}
+      .section{font-size:13px;font-weight:780;letter-spacing:1px}.heading{font-size:15px;font-weight:740}.body{font-size:12px;fill:#66768b}.tiny{font-size:10px;fill:#75849a}.brand{font-size:10px;font-weight:800;letter-spacing:.3px}
+      .line{fill:none;stroke:#8593a6;stroke-width:2.2;marker-end:url(#arrow)}.gline{fill:none;stroke:#16836f;stroke-width:2.5;marker-end:url(#green)}.rline{fill:none;stroke:#d45c5b;stroke-width:2.5;marker-end:url(#red)}
+    </style>
+  </defs>
+  <rect width="1440" height="900" rx="22" fill="#f4f7fb"/><rect width="1440" height="122" rx="22" fill="#fff"/><path d="M0 122H1440" stroke="#e6ebf2"/>
+  <text x="48" y="35" class="eyebrow">DEVOPS PORTFOLIO  /  CASE 03</text><text x="48" y="76" class="title">Give every pull request its own safe test space</text><text x="50" y="102" class="sub">Synthetic data · isolated Docker resources · checks before preview · cleanup by exact ownership</text>
+  <rect x="1183" y="38" width="208" height="42" rx="13" fill="#eaf4f1"/><circle cx="1203" cy="59" r="6" fill="#16836f"/><text x="1217" y="63" class="tiny" style="font-weight:750;fill:#286a5c">LOCAL DOCKER LAB</text>
+
+  <rect x="42" y="145" width="1356" height="468" rx="20" fill="#fff" stroke="#e0e7f0"/>
+  <text x="68" y="180" class="section">01  ·  OPEN OR UPDATE A PULL REQUEST</text><text x="68" y="202" class="body">Each commit generation receives a separate project, network, volume, and temporary credentials.</text>
+
+  <rect x="65" y="275" width="180" height="134" rx="15" fill="#f5f8fd" stroke="#dce5f0"/><text x="85" y="311" class="brand" style="fill:#416b9c">TRIGGER</text><text x="85" y="344" class="heading">Pull request</text><text x="85" y="371" class="body">open · synchronize</text><text x="85" y="393" class="tiny">repo + PR + commit SHA</text>
+  <rect x="290" y="275" width="180" height="134" rx="15" fill="#f5f8fd" stroke="#dce5f0"/><text x="310" y="311" class="brand" style="fill:#416b9c">CI VALIDATION</text><text x="310" y="344" class="heading">Check source</text><text x="310" y="371" class="body">lint · tests · image scan</text><text x="310" y="393" class="tiny">fork runner has no secrets</text>
+  <rect x="515" y="275" width="180" height="134" rx="15" fill="#f4f8ff" stroke="#cfddf0"/><text x="535" y="311" class="brand" style="fill:#416b9c">BUILD</text><text x="535" y="344" class="heading">Pin image digest</text><text x="535" y="371" class="body">record commit + digest</text><text x="535" y="393" class="tiny">immutable test artifact</text>
+  <rect x="740" y="275" width="190" height="134" rx="15" fill="#eff9f6" stroke="#cde8df" filter="url(#shadow)"/><text x="760" y="311" class="brand" style="fill:#16765f">ISOLATED COMPOSE</text><text x="760" y="344" class="heading">PR-specific stack</text><text x="760" y="371" class="body">app + database + seed</text><text x="760" y="393" class="tiny">synthetic deterministic data</text>
+  <rect x="975" y="275" width="190" height="134" rx="15" fill="#f5f8fd" stroke="#dce5f0"/><text x="995" y="311" class="brand" style="fill:#416b9c">DEPLOYMENT CHECKS</text><text x="995" y="344" class="heading">Wait for readiness</text><text x="995" y="371" class="body">migration + API smoke test</text><text x="995" y="393" class="tiny">timeout produces a failure</text>
+  <rect x="1210" y="275" width="175" height="134" rx="15" fill="#eff9f6" stroke="#cde8df"/><text x="1230" y="311" class="brand" style="fill:#16765f">CI RESULT</text><text x="1230" y="344" class="heading">Preview status</text><text x="1230" y="371" class="body">URL + SHA + expiry</text><text x="1230" y="393" class="tiny">ready only after checks pass</text>
+  <path d="M245 342h45" class="line"/><path d="M470 342h45" class="line"/><path d="M695 342h45" class="line"/><path d="M930 342h45" class="line"/><path d="M1165 342h45" class="line"/>
+
+  <rect x="42" y="650" width="1356" height="208" rx="20" fill="#17283e"/>
+  <text x="68" y="690" class="section" style="fill:#edf3fa">02  ·  EXPIRE AND CLEAN UP ONLY WHAT THIS PR OWNS</text><text x="68" y="716" class="body" style="fill:#b7c5d7">Close/merge events and TTL use the same idempotent cleanup path; a sweeper catches interrupted jobs.</text>
+  <rect x="70" y="750" width="290" height="78" rx="13" fill="#233951"/><text x="90" y="781" class="heading" style="fill:#f5f8fc">PR closed / merged / TTL</text><text x="90" y="806" class="tiny" style="fill:#b7c5d7">24 h expiry · sweeper every 15 min</text>
+  <path d="M360 789h66" fill="none" stroke="#8297b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <rect x="440" y="750" width="400" height="78" rx="13" fill="#233951"/><text x="460" y="781" class="heading" style="fill:#f5f8fc">Verify owner + generation labels</text><text x="460" y="806" class="tiny" style="fill:#b7c5d7">repo · PR · commit generation · expiry</text>
+  <path d="M840 789h66" fill="none" stroke="#8297b2" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <rect x="920" y="750" width="448" height="78" rx="13" fill="#233951"/><text x="940" y="781" class="heading" style="fill:#f5f8fc">Remove exact project resources</text><text x="940" y="806" class="tiny" style="fill:#b7c5d7">containers · network · volume · write cleanup result</text>
+  <path d="M155 409v341" fill="none" stroke="#8593a6" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#arrow)"/>
+
+  <rect x="1020" y="490" width="348" height="102" rx="15" fill="#fff6f5" stroke="#f0d8d5"/>
+  <text x="1042" y="524" class="brand" style="fill:#b34a48">ISOLATION GUARDRAILS</text><text x="1042" y="552" class="body">No Docker socket in app containers · no production data</text><text x="1042" y="574" class="tiny">fork code runs on a disposable, restricted runner</text>
+</svg>
